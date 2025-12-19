@@ -1,30 +1,26 @@
-from src.db.connection import get_conn
+from nba_api.stats.static import players
+import pandas as pd
+from src.etl.load.core_players import upsert_core_players
 
-def upsert_core_players(df):
-    sql = """
-        insert into core.dim_players
-        (id, full_name, first_name, last_name, is_active)
-        values (%s, %s, %s, %s, %s)
-        on conflict (id) do update
-        set
-          full_name = excluded.full_name,
-          first_name = excluded.first_name,
-          last_name = excluded.last_name,
-          is_active = excluded.is_active;
-    """
+def run():
+    df = pd.DataFrame(players.get_players())
 
-    conn = get_conn()
-    cur = conn.cursor()
+    # --- LIMPIEZA OBLIGATORIA (casos tipo "Nene") ---
+    df["first_name"] = df["first_name"].fillna("").str.strip()
+    df["last_name"] = df["last_name"].fillna("").str.strip()
+    df["full_name"] = df["full_name"].fillna("").str.strip()
 
-    for _, row in df.iterrows():
-        cur.execute(sql, (
-            int(row["id"]),
-            row["full_name"],
-            row["first_name"],
-            row["last_name"],
-            bool(row["is_active"])
-        ))
+    df.loc[df["first_name"] == "", "first_name"] = df["full_name"]
+    df.loc[df["last_name"] == "", "last_name"] = df["full_name"]
 
-    conn.commit()
-    cur.close()
-    conn.close()
+    # Seguridad extra: eliminar cualquier fila aún inválida
+    df = df[
+        (df["first_name"] != "") &
+        (df["last_name"] != "") &
+        (df["full_name"] != "")
+    ]
+
+    upsert_core_players(df)
+
+if __name__ == "__main__":
+    run()

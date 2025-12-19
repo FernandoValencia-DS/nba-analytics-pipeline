@@ -1,5 +1,3 @@
-from nba_api.stats.static import teams
-import pandas as pd
 from src.etl.load.core_teams import upsert_core_teams
 from src.etl.extract.teams import fetch_teams
 

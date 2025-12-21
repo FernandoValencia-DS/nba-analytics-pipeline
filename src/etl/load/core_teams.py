@@ -3,8 +3,8 @@ from src.db.connection import get_conn
 def upsert_core_teams(df):
     sql = """
         insert into core.dim_teams
-        (team_id, full_name, abbreviation, nickname, city, state, year_founded)
-        values (%s, %s, %s, %s, %s, %s, %s)
+        (team_id, full_name, abbreviation, nickname, city, state, year_founded, team_logo)
+        values (%s, %s, %s, %s, %s, %s, %s, %s)
         on conflict (team_id) do update
         set
           full_name = excluded.full_name,
@@ -12,7 +12,8 @@ def upsert_core_teams(df):
           nickname = excluded.nickname,
           city = excluded.city,
           state = excluded.state,
-          year_founded = excluded.year_founded;
+          year_founded = excluded.year_founded,
+          team_logo = excluded.team_logo;
     """
 
     conn = get_conn()
@@ -26,7 +27,8 @@ def upsert_core_teams(df):
             row["nickname"],
             row["city"],
             row["state"],
-            int(row["year_founded"]) if row["year_founded"] is not None else None
+            int(row["year_founded"]) if row["year_founded"] is not None else None,
+            row["team_logo"]
         ))
 
     conn.commit()

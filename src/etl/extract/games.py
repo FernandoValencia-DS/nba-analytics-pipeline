@@ -6,7 +6,9 @@ def fetch_games(seasons: list[str]) -> pd.DataFrame:
     dfs = []
 
     for season in seasons:
-        partidos = leaguegamefinder.LeagueGameFinder(season_nullable=season)
+        partidos = leaguegamefinder.LeagueGameFinder(
+            season_nullable=season,
+            season_type_nullable='Regular Season')
         df_partidos = partidos.get_data_frames()[0]
         df_partidos['SEASON_NUM'] = season
         dfs.append(df_partidos)

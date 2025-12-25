@@ -1,7 +1,7 @@
 import pandas as pd
 from nba_api.stats.endpoints import shotchartdetail
 import numpy as np
-from src.etl.transform.trasform_shots import tr_shots
+from src.etl.transform.transform_shots import tr_shots
 
 def fetch_shots(seasons: list[str]):
 

@@ -1,6 +1,6 @@
 import pandas as pd
 from nba_api.stats.endpoints import leaguegamefinder
-from src.etl.transform.trasform_games import transform_games
+from src.etl.transform.transform_games import transform_games
 
 def fetch_games(seasons: list[str]) -> pd.DataFrame:
     dfs = []

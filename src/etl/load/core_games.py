@@ -6,7 +6,7 @@ def upsert_fct_games(df: pd.DataFrame):
     sql = """
     INSERT INTO core.fct_games (
         game_team_id, game_id, team_id,
-        season_id, season_num,
+        season_id, season_num, season_team_id,
         game_date, matchup, ha, wl,
         min, pts, fgm, fga, fg_pct,
         fg3m, fg3a, fg3_pct,
@@ -17,7 +17,7 @@ def upsert_fct_games(df: pd.DataFrame):
     )
     VALUES (
         %s, %s, %s,
-        %s, %s,
+        %s, %s, %s,
         %s, %s, %s, %s,
         %s, %s, %s, %s, %s,
         %s, %s, %s,
@@ -31,6 +31,7 @@ def upsert_fct_games(df: pd.DataFrame):
         team_id = excluded.team_id,
         season_id = excluded.season_id,
         season_num = excluded.season_num,
+        season_team_id = excluded.season_team_id,
         game_date = excluded.game_date,
         matchup = excluded.matchup,
         ha = excluded.ha,
@@ -65,7 +66,7 @@ def upsert_fct_games(df: pd.DataFrame):
     for _, r in df.iterrows():
         cur.execute(sql, (
             r["GAME_TEAM_ID"], r["GAME_ID"], int(r["TEAM_ID"]),
-            int(r["SEASON_ID"]), r["SEASON_NUM"],
+            int(r["SEASON_ID"]), r["SEASON_NUM"], r["SEASON_TEAM_ID"],
             r["GAME_DATE"], r["MATCHUP"], r["HA"], r["WL"],
             r["MIN"], r["PTS"], r["FGM"], r["FGA"], r["FG_PCT"],
             r["FG3M"], r["FG3A"], r["FG3_PCT"],

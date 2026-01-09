@@ -4,7 +4,7 @@ import pandas as pd
 def upsert_fct_standings(df: pd.DataFrame):
 
     sql = """
-    INSERT INTO core.fct_standings (
+    INSERT INTO core.dim_standings (
         season_team_id,
         season_id,
         team_id,

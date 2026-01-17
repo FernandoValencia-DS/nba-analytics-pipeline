@@ -10,7 +10,7 @@ def upsert_fct_shots(df):
         period, minutes_remaining, seconds_remaining,
         grid_type, event_type, action_type, shot_type,
         shot_zone_basic, shot_zone_area, shot_zone_range,
-        shot_distance, loc_x, loc_y, shot_attempted_flag, shot_made_flag
+        shot_distance, loc_x, loc_y, shot_attempted_flag, shot_made_flag, zone_id, game_player_id
     )
     VALUES (
         %s,%s,%s,%s,%s,%s,
@@ -18,7 +18,7 @@ def upsert_fct_shots(df):
         %s,%s,%s,
         %s,%s,%s,%s,
         %s,%s,%s,
-        %s,%s,%s,%s,%s
+        %s,%s,%s,%s,%s,%s,%s
     )
     ON CONFLICT (game_gevent_id) DO UPDATE SET
         game_team_id = excluded.game_team_id,
@@ -46,7 +46,9 @@ def upsert_fct_shots(df):
         loc_x = excluded.loc_x,
         loc_y = excluded.loc_y,
         shot_attempted_flag = excluded.shot_attempted_flag,
-        shot_made_flag = excluded.shot_made_flag;
+        shot_made_flag = excluded.shot_made_flag,
+        zone_id = excluded.zone_id,
+        game_player_id = excluded.game_player_id;
     """
 
     rows = [
@@ -59,7 +61,8 @@ def upsert_fct_shots(df):
             r["GRID_TYPE"], r["EVENT_TYPE"], r["ACTION_TYPE"], r["SHOT_TYPE"],
             r["SHOT_ZONE_BASIC"], r["SHOT_ZONE_AREA"], r["SHOT_ZONE_RANGE"],
             int(r["SHOT_DISTANCE"]), int(r["LOC_X"]), int(r["LOC_Y"]),
-            int(r["SHOT_ATTEMPTED_FLAG"]), int(r["SHOT_MADE_FLAG"])
+            int(r["SHOT_ATTEMPTED_FLAG"]), int(r["SHOT_MADE_FLAG"]),r['zone_id'],
+            r['GAME_PLAYER_ID']
         )
         for _, r in df.iterrows()
     ]

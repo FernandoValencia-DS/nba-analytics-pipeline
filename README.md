@@ -1,6 +1,7 @@
 # NBA Analytics Pipeline
 
 Repositorio colaborativo para el análisis de datos de la NBA:
+
 - Ingesta y limpieza de datos
 - Análisis exploratorio
 - Modelos de predicción

@@ -90,7 +90,8 @@ create table if not exists core.fct_games (
     pf                 integer,
     plus_minus         numeric,
     team_abbreviation  text,
-    team_name          text
+    team_name          text,
+    season_type         text
 );
 
 create index if not exists idx_fct_games_game_id on core.fct_games (game_id);

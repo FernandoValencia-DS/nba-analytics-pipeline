@@ -13,7 +13,7 @@ def upsert_fct_games(df: pd.DataFrame):
         ftm, fta, ft_pct,
         oreb, dreb, reb, ast, stl, blk, tov, pf,
         plus_minus,
-        team_abbreviation, team_name
+        team_abbreviation, team_name, season_type
     )
     VALUES (
         %s, %s, %s,
@@ -24,7 +24,7 @@ def upsert_fct_games(df: pd.DataFrame):
         %s, %s, %s,
         %s, %s, %s, %s, %s, %s, %s, %s,
         %s,
-        %s, %s
+        %s, %s, %s
     )
     ON CONFLICT (game_team_id) DO UPDATE SET
         game_id = excluded.game_id,
@@ -57,7 +57,8 @@ def upsert_fct_games(df: pd.DataFrame):
         pf = excluded.pf,
         plus_minus = excluded.plus_minus,
         team_abbreviation = excluded.team_abbreviation,
-        team_name = excluded.team_name;
+        team_name = excluded.team_name,
+        season_type = excluded.season_type;
     """
 
     conn = get_conn()
@@ -74,7 +75,7 @@ def upsert_fct_games(df: pd.DataFrame):
             r["OREB"], r["DREB"], r["REB"], r["AST"], r["STL"], r["BLK"],
             r["TOV"], r["PF"],
             r["PLUS_MINUS"],
-            r["TEAM_ABBREVIATION"], r["TEAM_NAME"]
+            r["TEAM_ABBREVIATION"], r["TEAM_NAME"], r["SEASON_TYPE"]
         ))
 
     conn.commit()

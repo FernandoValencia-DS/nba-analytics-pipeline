@@ -6,12 +6,14 @@ def fetch_games(seasons: list[str]) -> pd.DataFrame:
     dfs = []
 
     for season in seasons:
-        partidos = leaguegamefinder.LeagueGameFinder(
-            season_nullable=season,
-            season_type_nullable='Regular Season')
-        df_partidos = partidos.get_data_frames()[0]
-        df_partidos['SEASON_NUM'] = season
-        dfs.append(df_partidos)
+        for season_type in ['Regular Season', 'Playoffs']:
+            partidos = leaguegamefinder.LeagueGameFinder(
+                season_nullable=season,
+                season_type_nullable=season_type)
+            df_partidos = partidos.get_data_frames()[0]
+            df_partidos['SEASON_NUM'] = season
+            df_partidos['SEASON_TYPE'] = season_type
+            dfs.append(df_partidos)
 
     # Concatenar todos los DataFrames de temporadas
     df_concat = pd.concat(dfs, axis=0)

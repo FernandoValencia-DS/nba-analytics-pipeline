@@ -6,3 +6,6 @@ nba-api
 seaborn
 psycopg2-binary
 python-dotenv
+prefect
+shapely
+requests

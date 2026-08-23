@@ -2,24 +2,18 @@ import time
 import random
 import pandas as pd
 import requests
-from nba_api.stats.endpoints import leaguegamelog
+from nba_api.stats.endpoints import leaguegamefinder
+from nba_api.stats.library.http import STATS_HEADERS
 from src.etl.transform.transform_games import transform_games
 
 
-# Headers "de navegador real" para reducir bloqueos de stats.nba.com
+# Headers de navegador real + headers legacy que a veces evitan bloqueos de stats.nba.com
 NBA_HEADERS = {
-    'Host': 'stats.nba.com',
-    'User-Agent': (
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-        '(KHTML, like Gecko) Chrome/124.0 Safari/537.36'
-    ),
-    'Accept': 'application/json, text/plain, */*',
-    'Accept-Language': 'en-US,en;q=0.9',
+    **STATS_HEADERS,
     'Referer': 'https://www.nba.com/',
     'Origin': 'https://www.nba.com',
     'x-nba-stats-origin': 'stats',
     'x-nba-stats-token': 'true',
-    'Connection': 'keep-alive',
 }
 
 
@@ -30,32 +24,21 @@ def _fetch_with_retry(
     attempts: int = 4,
     base_backoff: float = 2.0,
 ) -> pd.DataFrame:
-    """
-    Intenta obtener los datos de una temporada/tipo de temporada con reintentos.
-    Distingue entre bloqueos (403/429) y timeouts/errores de red para
-    aplicar una espera distinta en cada caso.
-    """
     last_err = None
 
     for a in range(1, attempts + 1):
         try:
-            partidos = leaguegamelog.LeagueGameLog(
-                season=season,
-                season_type_all_star=season_type,
+            partidos = leaguegamefinder.LeagueGameFinder(
+                season_nullable=season,
+                season_type_nullable=season_type,
                 timeout=timeout,
                 headers=NBA_HEADERS,
             )
-            df = partidos.get_data_frames()[0]
-
-            # LeagueGameLog trae una columna extra (VIDEO_AVAILABLE) que
-            # LeagueGameFinder no tenía. La descartamos para mantener la
-            # misma estructura que el resto del pipeline espera.
-            df = df.drop(columns=['VIDEO_AVAILABLE'], errors='ignore')
-            return df
+            return partidos.get_data_frames()[0]
 
         except requests.exceptions.RequestException as e:
             last_err = e
-            status = getattr(e.response, "status_code", None) if hasattr(e, "response") else None
+            status = getattr(e.response, "status_code", None)
 
             if status in (403, 429):
                 # Bloqueo activo: esperar mucho más, no tiene sentido reintentar rápido
@@ -75,11 +58,6 @@ def _fetch_with_retry(
 
 
 def fetch_games(seasons: list[str]) -> pd.DataFrame:
-    """
-    Descarga partidos de NBA para las temporadas indicadas (Regular Season y Playoffs).
-    Si una temporada/tipo falla tras todos los reintentos, se registra y se continúa
-    con las demás en vez de abortar todo el pipeline.
-    """
     dfs = []
     fallidas = []
 
@@ -87,14 +65,6 @@ def fetch_games(seasons: list[str]) -> pd.DataFrame:
         for season_type in ['Regular Season', 'Playoffs']:
             try:
                 df_partidos = _fetch_with_retry(season, season_type)
-
-                if df_partidos.empty:
-                    # Temporada/tipo sin partidos aún (ej. temporada futura o
-                    # playoffs que no han empezado): no es un error, simplemente
-                    # no hay datos todavía.
-                    print(f"VACÍO: {season} {season_type} no tiene partidos registrados aún.")
-                    continue
-
                 df_partidos['SEASON_NUM'] = season
                 df_partidos['SEASON_TYPE'] = season_type
                 dfs.append(df_partidos)
@@ -107,11 +77,10 @@ def fetch_games(seasons: list[str]) -> pd.DataFrame:
             # Pausa entre requests para no saturar el servidor (con jitter)
             time.sleep(0.6 + random.uniform(0, 0.4))
 
-    if not dfs:
-        raise RuntimeError("No se pudo obtener ningún dato de NBA stats tras todos los intentos.")
-
     if fallidas:
-        print(f"ADVERTENCIA: las siguientes combinaciones fallaron y se omitieron: {fallidas}")
+        raise RuntimeError(
+            f"No se pudo obtener datos de NBA stats para: {fallidas}"
+        )
 
     # Concatenar todos los DataFrames obtenidos
     df_concat = pd.concat(dfs, axis=0)

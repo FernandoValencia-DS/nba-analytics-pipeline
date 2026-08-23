@@ -25,6 +25,7 @@ def transform_games(df_temporadas: pd.DataFrame) -> pd.DataFrame:
 
     df_temporadas['SEASON_TEAM_ID'] = df_temporadas['SEASON_ID'].astype(str)+"-"+df_temporadas['TEAM_ID'].astype(str)
 
+    df_temporadas.drop(columns = ['VIDEO_AVAILABLE'], inplace=True, errors='ignore')
     equipos = list(fetch_teams()['id'].astype('str'))
     df_temporadas = df_temporadas.loc[
         df_temporadas["TEAM_ID"].astype(str).isin(equipos)

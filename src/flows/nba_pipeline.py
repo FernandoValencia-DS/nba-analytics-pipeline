@@ -7,6 +7,7 @@ from src.scripts.run_standings_load import run as run_standings
 from src.scripts.run_boxscore_load import run as run_boxscore
 from src.scripts.run_shots_load import run as run_shots
 
+seasons = ["2025-26"]
 
 @task(name="load-teams", retries=2, retry_delay_seconds=30)
 def load_teams():
@@ -20,22 +21,22 @@ def load_players():
 
 @task(name="load-games", retries=2, retry_delay_seconds=30)
 def load_games():
-    run_games()
+    run_games(seasons=seasons)
 
 
 @task(name="load-standings", retries=2, retry_delay_seconds=30)
 def load_standings():
-    run_standings()
+    run_standings(seasons=seasons)
 
 
 @task(name="load-boxscore", retries=2, retry_delay_seconds=30)
 def load_boxscore():
-    run_boxscore()
+    run_boxscore(seasons=seasons)
 
 
 @task(name="load-shots", retries=2, retry_delay_seconds=30)
 def load_shots():
-    run_shots()
+    run_shots(seasons=seasons)
 
 
 @flow(name="nba-data-pipeline")

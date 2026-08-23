@@ -1,8 +1,7 @@
 from src.etl.extract.boxscore import fetch_gamebox, fetch_pending_game_ids_for_boxscore
 from src.etl.load.core_boxscore import upsert_fct_boxscore
 
-def run():
-    seasons = ["2024-25","2025-26"]
+def run(seasons = ["2024-25","2025-26"]):
     pending = fetch_pending_game_ids_for_boxscore(seasons)
 
     # toma solo 400 esta corrida

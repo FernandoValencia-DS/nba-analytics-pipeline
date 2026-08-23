@@ -193,6 +193,7 @@ create materialized view if not exists core.fct_shot_zone_gp as
 select
     game_player_id,
     zone_id,
+    player_id,
     count(*) as fga,
     sum(shot_made_flag)::int as fgm
 from core.fct_shots

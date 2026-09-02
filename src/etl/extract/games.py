@@ -1,5 +1,6 @@
 import pandas as pd
 from nba_api.stats.endpoints import leaguegamefinder
+from src.etl.extract._nba_http import nba_request_kwargs
 from src.etl.transform.transform_games import transform_games
 
 def fetch_games(seasons: list[str]) -> pd.DataFrame:
@@ -9,7 +10,8 @@ def fetch_games(seasons: list[str]) -> pd.DataFrame:
         for season_type in ['Regular Season', 'Playoffs']:
             partidos = leaguegamefinder.LeagueGameFinder(
                 season_nullable=season,
-                season_type_nullable=season_type)
+                season_type_nullable=season_type,
+                **nba_request_kwargs())
             df_partidos = partidos.get_data_frames()[0]
             df_partidos['SEASON_NUM'] = season
             df_partidos['SEASON_TYPE'] = season_type

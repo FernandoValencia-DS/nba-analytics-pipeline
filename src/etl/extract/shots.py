@@ -1,6 +1,7 @@
 import pandas as pd
 from nba_api.stats.endpoints import shotchartdetail
 import numpy as np
+from src.etl.extract._nba_http import nba_request_kwargs
 from src.etl.transform.transform_shots import tr_shots
 from src.db.connection import get_conn
 
@@ -33,7 +34,8 @@ def fetch_shots(seasons: list[str]):
                     player_id=0,
                     season_type_all_star=season_type,
                     season_nullable=season,
-                    context_measure_simple="FGA"
+                    context_measure_simple="FGA",
+                    **nba_request_kwargs()
                 )
                 df_shots = shots.get_data_frames()[0]
                 df_shots['SEASON_NUM'] = season

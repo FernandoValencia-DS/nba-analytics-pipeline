@@ -3,6 +3,7 @@ import pandas as pd
 from src.db.connection import get_conn
 import time
 from nba_api.stats.endpoints import boxscoretraditionalv3, boxscoretraditionalv2
+from src.etl.extract._nba_http import nba_proxy_kwargs
 from src.etl.transform.transform_boxscore import tr_boxscore
 from requests.exceptions import ReadTimeout, ConnectionError, HTTPError, Timeout
 import requests
@@ -55,6 +56,7 @@ def fetch_gamebox(
     dfs = []
     log = []
     consecutive_fails = 0
+    proxy_kwargs = nba_proxy_kwargs()
 
     def try_call(fn, attempts: int, base_backoff: float = 1.5):
         last_err = None
@@ -73,7 +75,7 @@ def fetch_gamebox(
 
         # --- V3 ---
         def v3():
-            box = boxscoretraditionalv3.BoxScoreTraditionalV3(game_id=gid, timeout=timeout)
+            box = boxscoretraditionalv3.BoxScoreTraditionalV3(game_id=gid, timeout=timeout, **proxy_kwargs)
             return box.get_data_frames()[0]
 
         df, err = try_call(v3, attempts_v3)
@@ -91,7 +93,7 @@ def fetch_gamebox(
         print("V3 falló → V2...", end=" ")
 
         def v2():
-            box = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=gid, timeout=timeout)
+            box = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=gid, timeout=timeout, **proxy_kwargs)
             return box.get_data_frames()[0]
 
         df2, err2 = try_call(v2, attempts_v2)

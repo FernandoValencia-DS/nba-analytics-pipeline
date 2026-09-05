@@ -1,5 +1,6 @@
 import pandas as pd
 from nba_api.stats.endpoints import leaguestandingsv3
+from src.etl.extract._nba_http import nba_request_kwargs
 
 def fetch_standings(seasons: list[str]) -> pd.DataFrame:
     dfs = []
@@ -8,7 +9,8 @@ def fetch_standings(seasons: list[str]) -> pd.DataFrame:
         standings = leaguestandingsv3.LeagueStandingsV3(
             league_id="00",
             season=season,
-            season_type="Regular Season"
+            season_type="Regular Season",
+            **nba_request_kwargs()
         )
 
         df = standings.get_data_frames()[0]

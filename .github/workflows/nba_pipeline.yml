@@ -28,4 +28,6 @@ jobs:
           SUPABASE_DB_USER: ${{ secrets.SUPABASE_DB_USER }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_DB_SSLMODE: require
+          NBA_PROXY: ${{ secrets.NBA_PROXY }}
+          NBA_TIMEOUT: "60"
         run: python -m src.flows.nba_pipeline

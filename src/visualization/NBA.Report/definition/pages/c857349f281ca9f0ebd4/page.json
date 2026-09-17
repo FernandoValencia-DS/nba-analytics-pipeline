@@ -1,0 +1,58 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "c857349f281ca9f0ebd4",
+  "displayName": "Comparative_Players_Demo",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 0,
+                    "Percent": -0.1
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "53D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "6af584c32bed19c5432a",
+      "target": "884293d3ae6bb233e03f",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6af584c32bed19c5432a",
+      "target": "f12cf71e0b5ab5fc5a98",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6af584c32bed19c5432a",
+      "target": "7dc39f988d69bfc63e25",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6af584c32bed19c5432a",
+      "target": "b706fe96f336869f8ffa",
+      "type": "DataFilter"
+    }
+  ]
+}

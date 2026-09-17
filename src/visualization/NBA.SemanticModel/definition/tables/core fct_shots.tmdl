@@ -1,0 +1,267 @@
+table 'core fct_shots'
+	lineageTag: 8f8788f6-3403-412d-b50b-4661ec27e21a
+
+	column game_gevent_id
+		dataType: string
+		lineageTag: 78ea1cee-3f22-454f-9270-23ef8b8acefd
+		summarizeBy: none
+		sourceColumn: game_gevent_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_id
+		dataType: string
+		lineageTag: a0929815-0291-42d0-be5a-cb0af61d6288
+		summarizeBy: none
+		sourceColumn: game_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_event_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 48b6d65b-003f-4909-9f5a-dc5ce907c815
+		summarizeBy: sum
+		sourceColumn: game_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 20ebb545-e0b4-443c-adbe-72f41087d699
+		summarizeBy: sum
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column player_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 341e62d7-e7bc-417a-acf3-cbb18ab682ab
+		summarizeBy: sum
+		sourceColumn: player_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 15f387d2-8715-4441-bd8a-e44cf9f55458
+		summarizeBy: none
+		sourceColumn: game_date
+
+		variation Variación
+			isDefault
+			relationship: 3bebb332-cc60-4a8b-bdea-513376e1b495
+			defaultHierarchy: LocalDateTable_bc6190a2-008c-4603-93b4-4ef66936d35a.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column period
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f29c50e-c87f-4325-9b34-5f26c0c5b9b7
+		summarizeBy: sum
+		sourceColumn: period
+
+		annotation SummarizationSetBy = Automatic
+
+	column minutes_remaining
+		dataType: int64
+		formatString: 0
+		lineageTag: f3841f1e-b140-4757-a592-8fa6bd1b45cf
+		summarizeBy: sum
+		sourceColumn: minutes_remaining
+
+		annotation SummarizationSetBy = Automatic
+
+	column seconds_remaining
+		dataType: int64
+		formatString: 0
+		lineageTag: f6916aa9-ba1b-48f9-9a2c-fec243e3d531
+		summarizeBy: sum
+		sourceColumn: seconds_remaining
+
+		annotation SummarizationSetBy = Automatic
+
+	column htm
+		dataType: string
+		lineageTag: bf97aede-c0eb-4871-9d6e-7bc4e75171d6
+		summarizeBy: none
+		sourceColumn: htm
+
+		annotation SummarizationSetBy = Automatic
+
+	column vtm
+		dataType: string
+		lineageTag: fe8fa60d-7c0f-49c9-b4f6-978ff8ce93bd
+		summarizeBy: none
+		sourceColumn: vtm
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_team_id
+		dataType: string
+		lineageTag: 7d777848-c079-49c1-8525-6e4ed8cb616a
+		summarizeBy: none
+		sourceColumn: game_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column grid_type
+		dataType: string
+		lineageTag: 847df42b-3546-41ef-960b-ec363d2dcaae
+		summarizeBy: none
+		sourceColumn: grid_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_type
+		dataType: string
+		lineageTag: df29177a-7aad-4433-be6a-d1525e803181
+		summarizeBy: none
+		sourceColumn: event_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column action_type
+		dataType: string
+		lineageTag: 38acdcf7-46b9-4205-b86c-4f26e2946d93
+		summarizeBy: none
+		sourceColumn: action_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_type
+		dataType: string
+		lineageTag: 3f4b54b3-f824-455c-928b-f90089c74959
+		summarizeBy: none
+		sourceColumn: shot_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_distance
+		dataType: int64
+		formatString: 0
+		lineageTag: a40e0a02-e186-4d13-8c6b-3925555e98a9
+		summarizeBy: sum
+		sourceColumn: shot_distance
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_attempted_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: f1900495-7710-4a40-a4a5-f376af2d9ff6
+		summarizeBy: sum
+		sourceColumn: shot_attempted_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_made_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 9663532a-8e3f-42c6-bce9-19488f7e8cfb
+		summarizeBy: sum
+		sourceColumn: shot_made_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_zone_basic
+		dataType: string
+		lineageTag: c0627eb3-bfb0-406b-b615-ceb1f9c1e5c3
+		summarizeBy: none
+		sourceColumn: shot_zone_basic
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_zone_area
+		dataType: string
+		lineageTag: fe1456c6-f1b7-4253-b02a-c12829a13d9f
+		summarizeBy: none
+		sourceColumn: shot_zone_area
+
+		annotation SummarizationSetBy = Automatic
+
+	column shot_zone_range
+		dataType: string
+		lineageTag: c80c6e20-7854-428f-823d-05ea42c5ba99
+		summarizeBy: none
+		sourceColumn: shot_zone_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column loc_x
+		dataType: int64
+		formatString: 0
+		lineageTag: c43a4712-b93c-4b82-81d7-29eff567d5f5
+		summarizeBy: sum
+		sourceColumn: loc_x
+
+		annotation SummarizationSetBy = Automatic
+
+	column loc_y
+		dataType: int64
+		formatString: 0
+		lineageTag: 2eacae52-2bf2-4239-81a8-16ad87a60504
+		summarizeBy: sum
+		sourceColumn: loc_y
+
+		annotation SummarizationSetBy = Automatic
+
+	column player_name
+		dataType: string
+		lineageTag: b63624c4-bb1e-48af-929b-c3bbbb2f265a
+		summarizeBy: none
+		sourceColumn: player_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		lineageTag: 68afc56d-e20a-42b3-bcf3-e1c9ca618657
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_num
+		dataType: string
+		lineageTag: 48e2d0e0-2ed1-47a2-8b27-2e34c173188e
+		summarizeBy: none
+		sourceColumn: season_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column zone_id
+		dataType: string
+		lineageTag: aed41d26-7fc2-47ec-90f0-a46e3c816ea9
+		summarizeBy: none
+		sourceColumn: zone_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_player_id
+		dataType: string
+		lineageTag: fa166e89-a719-44ae-b033-1cde494416d9
+		summarizeBy: none
+		sourceColumn: game_player_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'core fct_shots' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("ep-wispy-darkness-ayi9xhot-pooler.c-5.us-east-2.aws.neon.tech", "neondb"),
+				    core_fct_shots = Origen{[Schema="core",Item="fct_shots"]}[Data]
+				in
+				    core_fct_shots
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

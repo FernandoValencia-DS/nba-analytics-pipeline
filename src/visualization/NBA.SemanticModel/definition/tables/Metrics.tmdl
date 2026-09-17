@@ -1,0 +1,53 @@
+table Metrics
+	lineageTag: ceb283bc-334a-4b90-b338-3219789271ba
+
+	column MetricKey
+		lineageTag: c4906f6c-bec6-44ec-95cb-4d1466e0a365
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MetricKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetricLabel
+		lineageTag: 895c1a54-5cfa-457c-a59a-07dc957a3163
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MetricLabel]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		formatString: 0
+		lineageTag: cee0551c-76c4-4ef0-9f3a-806653938b0d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [SortOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metrics = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "MetricKey", STRING,
+				    "MetricLabel", STRING,
+				    "SortOrder", INTEGER,
+				    {
+				        {"pts", "PTS", 1},
+				        {"fg3m", "3PM", 2},
+				        {"ftm", "FTM", 3},
+				        {"oreb", "OREB", 4},
+				        {"dreb", "DREB", 5},
+				        {"ast", "AST", 6},
+				        {"stl", "STL", 7},
+				        {"blk", "BLK", 8},
+				        {"tov", "TOV", 9}
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = f591c13f93a34382826eb8436d96021b
+

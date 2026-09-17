@@ -1,0 +1,329 @@
+table 'core fct_boxscore'
+	lineageTag: b464a9fe-c700-4fc4-a8ed-dcb837905adb
+
+	column game_player_id
+		dataType: string
+		lineageTag: ff046b98-f134-4a34-a79d-9b192c9db930
+		summarizeBy: none
+		sourceColumn: game_player_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_id
+		dataType: string
+		lineageTag: ba7fca79-4df7-4870-bbdf-7c87e9281b7f
+		summarizeBy: none
+		sourceColumn: game_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c5e75c5f-e1c2-4bde-bc7a-74e54c9e04fc
+		summarizeBy: sum
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 69b1469b-09d0-4b38-a6bd-38962d2a14b7
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_team_id
+		dataType: string
+		lineageTag: b7bd5839-6c24-49f3-b682-d814528750a7
+		summarizeBy: none
+		sourceColumn: game_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_city
+		dataType: string
+		lineageTag: 3b874dcc-e2f5-40c9-a5e5-2ff9dd93db17
+		summarizeBy: none
+		sourceColumn: team_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		lineageTag: f7aa1858-5912-455a-969a-60b25128f19f
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_tricode
+		dataType: string
+		lineageTag: f58af84e-ed3f-46cc-a2c2-3d92a4a8e232
+		summarizeBy: none
+		sourceColumn: team_tricode
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_slug
+		dataType: string
+		lineageTag: 27c80e1f-1c8d-41ea-82d9-dc652d33dddc
+		summarizeBy: none
+		sourceColumn: team_slug
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: 837d0b8f-310f-4d47-bbd2-906d83d44568
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column family_name
+		dataType: string
+		lineageTag: 8917b35a-06dd-474f-bc17-76decec83011
+		summarizeBy: none
+		sourceColumn: family_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column name_i
+		dataType: string
+		lineageTag: b33d1a77-24f3-42c5-81f5-6a917e4096e6
+		summarizeBy: none
+		sourceColumn: name_i
+
+		annotation SummarizationSetBy = Automatic
+
+	column player_slug
+		dataType: string
+		lineageTag: 36f4e6de-0466-4c29-9943-f14c6dc3ef17
+		summarizeBy: none
+		sourceColumn: player_slug
+
+		annotation SummarizationSetBy = Automatic
+
+	column position
+		dataType: string
+		lineageTag: cf8db097-55c2-40aa-82c4-156fa929e7b3
+		summarizeBy: none
+		sourceColumn: position
+
+		annotation SummarizationSetBy = Automatic
+
+	column jersey_num
+		dataType: string
+		lineageTag: 8da9b28e-2d3e-4b13-9f5a-159a83780e45
+		summarizeBy: none
+		sourceColumn: jersey_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: 96d9347f-3455-4f23-909b-8cd6f452d56b
+		summarizeBy: none
+		sourceColumn: comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column minutes
+		dataType: string
+		lineageTag: c5992b44-6ad8-431a-9baf-d22306bb6991
+		summarizeBy: none
+		sourceColumn: minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column field_goals_made
+		dataType: int64
+		formatString: 0
+		lineageTag: da1c8b01-8d0d-49c2-8236-ab1c5bb081f3
+		summarizeBy: sum
+		sourceColumn: field_goals_made
+
+		annotation SummarizationSetBy = Automatic
+
+	column field_goals_attempted
+		dataType: int64
+		formatString: 0
+		lineageTag: f9beb8dd-1b8c-49fe-9310-a445d6cf6eff
+		summarizeBy: sum
+		sourceColumn: field_goals_attempted
+
+		annotation SummarizationSetBy = Automatic
+
+	column field_goals_percentage
+		dataType: double
+		lineageTag: 00c9a22c-8df9-4c74-b520-3a3e8cbcf633
+		summarizeBy: sum
+		sourceColumn: field_goals_percentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column three_pointers_made
+		dataType: int64
+		formatString: 0
+		lineageTag: 9370fd88-18bc-4b19-a01e-c842894ccb12
+		summarizeBy: sum
+		sourceColumn: three_pointers_made
+
+		annotation SummarizationSetBy = Automatic
+
+	column three_pointers_attempted
+		dataType: int64
+		formatString: 0
+		lineageTag: 1bf9805d-00f9-4037-b90b-630d1ab74cc7
+		summarizeBy: sum
+		sourceColumn: three_pointers_attempted
+
+		annotation SummarizationSetBy = Automatic
+
+	column three_pointers_percentage
+		dataType: double
+		lineageTag: 0733d2ca-a891-4035-949d-608e87a071bd
+		summarizeBy: sum
+		sourceColumn: three_pointers_percentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column free_throws_made
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cc356a2-f13a-4ddd-9509-98f3f7281a7e
+		summarizeBy: sum
+		sourceColumn: free_throws_made
+
+		annotation SummarizationSetBy = Automatic
+
+	column free_throws_attempted
+		dataType: int64
+		formatString: 0
+		lineageTag: 242289f2-7a80-4646-952f-52ab3adf0bd0
+		summarizeBy: sum
+		sourceColumn: free_throws_attempted
+
+		annotation SummarizationSetBy = Automatic
+
+	column free_throws_percentage
+		dataType: double
+		lineageTag: dcc58747-0c90-4d24-a977-b0bc47e18781
+		summarizeBy: sum
+		sourceColumn: free_throws_percentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rebounds_offensive
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a52c4c7-7eb7-4175-90d4-055c66f57cbb
+		summarizeBy: sum
+		sourceColumn: rebounds_offensive
+
+		annotation SummarizationSetBy = Automatic
+
+	column rebounds_defensive
+		dataType: int64
+		formatString: 0
+		lineageTag: 4205bf33-23f5-4d8b-a060-55bc7ded65fd
+		summarizeBy: sum
+		sourceColumn: rebounds_defensive
+
+		annotation SummarizationSetBy = Automatic
+
+	column rebounds_total
+		dataType: int64
+		formatString: 0
+		lineageTag: 68badec9-d9c5-4dda-ba8d-c6bd8ba0753f
+		summarizeBy: sum
+		sourceColumn: rebounds_total
+
+		annotation SummarizationSetBy = Automatic
+
+	column assists
+		dataType: int64
+		formatString: 0
+		lineageTag: 35213096-3127-4d65-8aea-b2324c7f0c4b
+		summarizeBy: sum
+		sourceColumn: assists
+
+		annotation SummarizationSetBy = Automatic
+
+	column steals
+		dataType: int64
+		formatString: 0
+		lineageTag: d2eea6e7-634f-4e92-94c4-7f78c41ab745
+		summarizeBy: sum
+		sourceColumn: steals
+
+		annotation SummarizationSetBy = Automatic
+
+	column blocks
+		dataType: int64
+		formatString: 0
+		lineageTag: 1444bdee-db85-46f1-947c-86ba4106d6a5
+		summarizeBy: sum
+		sourceColumn: blocks
+
+		annotation SummarizationSetBy = Automatic
+
+	column turnovers
+		dataType: int64
+		formatString: 0
+		lineageTag: ca497cf8-27bc-4084-b4cd-212b59147fb0
+		summarizeBy: sum
+		sourceColumn: turnovers
+
+		annotation SummarizationSetBy = Automatic
+
+	column fouls_personal
+		dataType: int64
+		formatString: 0
+		lineageTag: 0602b0c2-f02c-4c92-912e-cd83e9e36a44
+		summarizeBy: sum
+		sourceColumn: fouls_personal
+
+		annotation SummarizationSetBy = Automatic
+
+	column points
+		dataType: int64
+		formatString: 0
+		lineageTag: e0eda53d-ac26-49ed-b4f4-1afaceb158bd
+		summarizeBy: sum
+		sourceColumn: points
+
+		annotation SummarizationSetBy = Automatic
+
+	column plus_minus_points
+		dataType: double
+		lineageTag: d4f8a8ca-3adb-4dd6-b15e-63fa85a69c53
+		summarizeBy: sum
+		sourceColumn: plus_minus_points
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'core fct_boxscore' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("ep-wispy-darkness-ayi9xhot-pooler.c-5.us-east-2.aws.neon.tech", "neondb"),
+				    core_fct_boxscore = Origen{[Schema="core",Item="fct_boxscore"]}[Data]
+				in
+				    core_fct_boxscore
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

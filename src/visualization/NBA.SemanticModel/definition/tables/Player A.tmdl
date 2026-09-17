@@ -1,0 +1,61 @@
+table 'Player A'
+	lineageTag: d5e9cb2e-032e-4fe5-97e1-8a11725b0211
+
+	column 'First Name'
+		lineageTag: 9943e494-4237-4403-8c75-76ae329cfc8e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [First Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Name'
+		lineageTag: e66d240a-d525-4253-b382-2016f2f899a5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Full Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		formatString: 0
+		lineageTag: af34548b-b97e-4247-81f4-e119b9b8bf88
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Headshot
+		lineageTag: 5a880051-3718-44e4-a510-969e6677645d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Headshot]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Active'
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5a6964d2-7713-4253-ad3a-720ad612b6b2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Is Active]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Player A' = calculated
+		mode: import
+		source = ```
+				
+				SELECTCOLUMNS(
+				    'core dim_players',
+				    "First Name", 'core dim_players'[first_name], 
+				    "Full Name", 'core dim_players'[full_name],
+				    "ID",'core dim_players'[id],
+				    "Is Active", 'core dim_players'[is_active],
+				    "Headshot",'core dim_players'[player_headshot]
+				)
+				```
+
+	annotation PBI_Id = 4786482da3844666866b9f4f7851b96b
+

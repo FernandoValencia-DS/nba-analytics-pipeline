@@ -1,0 +1,32 @@
+table 'core dim_zones'
+	lineageTag: 0b92a0e2-2228-46e9-9f86-d0bdd7f35e72
+
+	column zone_id
+		dataType: string
+		lineageTag: f45e01be-0a5b-4d16-a2e4-9cffd0e35b78
+		summarizeBy: none
+		sourceColumn: zone_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column zone_name
+		dataType: string
+		lineageTag: 19e5d7dd-82de-486b-baed-aba13a42d8e1
+		summarizeBy: none
+		sourceColumn: zone_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'core dim_zones' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("ep-wispy-darkness-ayi9xhot-pooler.c-5.us-east-2.aws.neon.tech", "neondb"),
+				    core_dim_zones = Origen{[Schema="core",Item="dim_zones"]}[Data]
+				in
+				    core_dim_zones
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

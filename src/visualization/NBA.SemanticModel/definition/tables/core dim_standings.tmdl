@@ -1,0 +1,179 @@
+table 'core dim_standings'
+	lineageTag: 18b04968-5833-4011-9f5f-3e08dbd6e493
+
+	column season_team_id
+		dataType: string
+		lineageTag: 2451dec6-45f8-4237-b2e0-0315c3694b17
+		summarizeBy: none
+		sourceColumn: season_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1eca6175-aeb9-4cc1-b6f9-444ebe8b4a0b
+		summarizeBy: none
+		sourceColumn: season_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b4e45d12-6907-4d9b-8cf6-9c7fb18b31b7
+		summarizeBy: none
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_city
+		dataType: string
+		lineageTag: 6857a54a-6bb5-4ff8-909e-18ffe3f14766
+		summarizeBy: none
+		sourceColumn: team_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		lineageTag: 2c247706-2c12-451c-a5fa-0c2bc220020f
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column conference
+		dataType: string
+		lineageTag: 61828846-6380-492d-a9b5-1df7c97213ad
+		summarizeBy: none
+		sourceColumn: conference
+
+		annotation SummarizationSetBy = Automatic
+
+	column conference_record
+		dataType: string
+		lineageTag: b8faa0c2-07c8-4459-9423-8c9ecb5ab839
+		summarizeBy: none
+		sourceColumn: conference_record
+
+		annotation SummarizationSetBy = Automatic
+
+	column playoff_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 12a74bbf-eb98-445d-9921-efd334b0bed3
+		summarizeBy: none
+		sourceColumn: playoff_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column clinch_indicator
+		dataType: string
+		lineageTag: 836c2dcb-c153-4f27-9d77-20a07c256500
+		summarizeBy: none
+		sourceColumn: clinch_indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column division
+		dataType: string
+		lineageTag: 7f0fb902-99a6-4bbe-ae1a-7f2daaf1c2d1
+		summarizeBy: none
+		sourceColumn: division
+
+		annotation SummarizationSetBy = Automatic
+
+	column division_record
+		dataType: string
+		lineageTag: 68072460-3e28-4f16-bbee-1d6a97f53360
+		summarizeBy: none
+		sourceColumn: division_record
+		sortByColumn: season_id
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column division_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b825260-52fe-4c1a-973d-371c2514f49f
+		summarizeBy: none
+		sourceColumn: division_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column wins
+		dataType: int64
+		formatString: 0
+		lineageTag: bc024a1f-2c05-4eb5-a2de-dd99b79d1e79
+		summarizeBy: none
+		sourceColumn: wins
+
+		annotation SummarizationSetBy = Automatic
+
+	column losses
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a9a14e9-5140-4d64-bcc7-fb6daa19e4c2
+		summarizeBy: none
+		sourceColumn: losses
+
+		annotation SummarizationSetBy = Automatic
+
+	column win_pct
+		dataType: double
+		lineageTag: b9623205-009b-4af3-a48e-1c44c92dd5c2
+		summarizeBy: none
+		sourceColumn: win_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column record
+		dataType: string
+		lineageTag: 3a5d1960-7abc-45eb-8b50-6c8e999cfa36
+		summarizeBy: none
+		sourceColumn: record
+
+		annotation SummarizationSetBy = Automatic
+
+	column home
+		dataType: string
+		lineageTag: e35523c3-028b-4c8c-9d8c-8bcb0b3e8864
+		summarizeBy: none
+		sourceColumn: home
+
+		annotation SummarizationSetBy = Automatic
+
+	column road
+		dataType: string
+		lineageTag: dc3a77a8-1fe3-4f87-a851-179393ca3727
+		summarizeBy: none
+		sourceColumn: road
+
+		annotation SummarizationSetBy = Automatic
+
+	column l10
+		dataType: string
+		lineageTag: 29fb9a24-064e-4e4f-b47b-eebe8bcaf26c
+		summarizeBy: none
+		sourceColumn: l10
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'core dim_standings' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("ep-wispy-darkness-ayi9xhot-pooler.c-5.us-east-2.aws.neon.tech", "neondb"),
+				    core_dim_standings = Origen{[Schema="core",Item="dim_standings"]}[Data]
+				in
+				    core_dim_standings
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,39 @@
+model Model
+	culture: es-CO
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-CO
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["core dim_players","core dim_teams","core fct_games","core fct_shots","core fct_boxscore","DAX","core dim_standings","core dim_zones","core fct_shot_zone_gp","games_type"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table 'core dim_players'
+ref table 'core dim_teams'
+ref table 'core fct_games'
+ref table DateTableTemplate_a0b4ba86-a635-4498-9cff-895b7458ec94
+ref table 'core fct_shots'
+ref table LocalDateTable_bc6190a2-008c-4603-93b4-4ef66936d35a
+ref table 'core fct_boxscore'
+ref table DAX
+ref table calendario
+ref table 'core dim_standings'
+ref table 'core dim_zones'
+ref table 'core fct_shot_zone_gp'
+ref table Team_A
+ref table Team_B
+ref table 'Team Role'
+ref table Metrics
+ref table Team_A_ha
+ref table Team_B_ha
+ref table 'Player A'
+ref table 'Player B'
+ref table LocalDateTable_bed69d71-d425-4154-967d-e6ed4d4b8fd9
+ref table games_type
+
+ref cultureInfo es-CO
+

@@ -1,0 +1,34 @@
+EVALUATE
+VAR EquipoA = "SAS"
+VAR ZonaFiltro = "RA"
+VAR MinFGA = 3
+
+VAR TablaJugadores =
+    CALCULATETABLE(
+        ADDCOLUMNS(
+            VALUES('core fct_shot_zone_gp'[player_id]),
+            "FGA_Jug", CALCULATE(SUM('core fct_shot_zone_gp'[fga])),
+            "FGM_Jug", CALCULATE(SUM('core fct_shot_zone_gp'[fgm]))
+        ),
+        'core fct_shot_zone_gp'[zone_id] = ZonaFiltro,
+        'core fct_games'[team_abbreviation] = EquipoA
+    )
+
+VAR TablaFiltrada = FILTER(TablaJugadores, [FGA_Jug] >= MinFGA)
+VAR PromedioZona = DIVIDE(SUMX(TablaFiltrada, [FGM_Jug]), SUMX(TablaFiltrada, [FGA_Jug]))
+VAR C = AVERAGEX(TablaFiltrada, [FGA_Jug]) * 0.5
+
+VAR TablaFinal =
+    ADDCOLUMNS(
+        TablaFiltrada,
+        "FG_Crudo", DIVIDE([FGM_Jug], [FGA_Jug]),
+        "FGAjustado", DIVIDE([FGM_Jug] + C * PromedioZona, [FGA_Jug] + C),
+        "Nombre",
+            CALCULATE(
+                SELECTEDVALUE('core dim_players'[full_name]),
+                'core dim_players'[id] = 'core fct_shot_zone_gp'[player_id]
+            )
+    )
+
+RETURN
+    TOPN(20, TablaFinal, [FGAjustado], DESC)

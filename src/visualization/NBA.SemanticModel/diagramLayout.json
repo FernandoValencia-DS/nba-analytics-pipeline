@@ -1,0 +1,268 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 8357.34556312665
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 955.25608262593073,
+            "y": 9988.8171036867061
+          },
+          "nodeIndex": "core dim_players",
+          "nodeLineageTag": "04460174-f4c5-4af6-a70c-98bffa7af738",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 243.11997766866736,
+            "y": 9603.1305105273423
+          },
+          "nodeIndex": "core dim_teams",
+          "nodeLineageTag": "ec581de9-484c-4b72-97a6-ac9710833f98",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 691.2039480796517,
+            "y": 9062.4105049445079
+          },
+          "nodeIndex": "core fct_games",
+          "nodeLineageTag": "41f0caa5-471d-4c49-90f6-e20563fdf16f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1418.2190863605508,
+            "y": 9176.865607867463
+          },
+          "nodeIndex": "core fct_shots",
+          "nodeLineageTag": "8f8788f6-3403-412d-b50b-4661ec27e21a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 700.77200055828337,
+            "y": 9492.6372069691188
+          },
+          "nodeIndex": "core fct_boxscore",
+          "nodeLineageTag": "b464a9fe-c700-4fc4-a8ed-dcb837905adb",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 526.12306700672877,
+            "y": 8356.5763919597211
+          },
+          "nodeIndex": "DAX",
+          "nodeLineageTag": "cab793d8-4745-4df6-bb60-b0e048a5a8fa",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 693.79938475854817,
+            "y": 8699.0810705275762
+          },
+          "nodeIndex": "calendario",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 242.40530132508991,
+            "y": 8855.53395544145
+          },
+          "nodeIndex": "core dim_standings",
+          "nodeLineageTag": "18b04968-5833-4011-9f5f-3e08dbd6e493",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1648.2369125228824,
+            "y": 9734.15462500974
+          },
+          "nodeIndex": "core dim_zones",
+          "nodeLineageTag": "0b92a0e2-2228-46e9-9f86-d0bdd7f35e72",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1158.3685842013676,
+            "y": 9603.6733856057635
+          },
+          "nodeIndex": "core fct_shot_zone_gp",
+          "nodeLineageTag": "a30bc3ab-b27e-4b72-a5a8-e80badb0e025",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 263.800438675517,
+            "y": 8357.6064892406266
+          },
+          "nodeIndex": "Team_A",
+          "nodeLineageTag": "b8b207c3-57b0-4dde-860a-e099af04594d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 8355.1724710604431
+          },
+          "nodeIndex": "Team_B",
+          "nodeLineageTag": "f4c2a668-3425-40bb-bd1a-b0651f3a0579",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 935.10374357296951,
+            "y": 8423.1878449623637
+          },
+          "nodeIndex": "Team Role",
+          "nodeLineageTag": "50fd8f4b-a72d-4fb0-99f9-fd34754d166a",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1328.7185439137722,
+            "y": 8175.8880598848773
+          },
+          "nodeIndex": "Metrics",
+          "nodeLineageTag": "ceb283bc-334a-4b90-b338-3219789271ba",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1053.6830621756769,
+            "y": 8203.0679545298335
+          },
+          "nodeIndex": "Team_A_ha",
+          "nodeLineageTag": "ae1743ff-fbe3-4da0-bc17-c1ac19abf3ce",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1632.0770973766907,
+            "y": 8388.997089870958
+          },
+          "nodeIndex": "Team_B_ha",
+          "nodeLineageTag": "ae2ee88e-7244-49eb-a33f-b0379718f2f5",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1216.1083009147062,
+            "y": 8557.4493502264322
+          },
+          "nodeIndex": "Player A",
+          "nodeLineageTag": "d5e9cb2e-032e-4fe5-97e1-8a11725b0211",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1595.629817571381,
+            "y": 8670.5987226721554
+          },
+          "nodeIndex": "Player B",
+          "nodeLineageTag": "108b1549-2cbc-4423-9b91-8ee703bf9d9c",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1932.2369125228824,
+            "y": 3691.76054186254
+          },
+          "nodeIndex": "games_type",
+          "nodeLineageTag": "7c03649f-afa9-46a0-a36d-6ec9774a28b8",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 63.859989510871941,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

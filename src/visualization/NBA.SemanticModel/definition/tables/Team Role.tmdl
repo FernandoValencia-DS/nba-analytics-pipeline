@@ -1,0 +1,22 @@
+table 'Team Role'
+	lineageTag: 50fd8f4b-a72d-4fb0-99f9-fd34754d166a
+
+	column Role
+		lineageTag: 5c774cb5-7a92-4de0-b1f9-7d41eb37bd42
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Role]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Team Role' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Role", STRING,
+				    { {"Team A"}, {"Team B"} }
+				)
+
+	annotation PBI_Id = 0bb106f3ab7e4a10ab19bf9d16cdd6b8
+

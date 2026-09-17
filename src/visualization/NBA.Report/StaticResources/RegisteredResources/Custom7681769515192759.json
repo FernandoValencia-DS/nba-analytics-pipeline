@@ -1,0 +1,17 @@
+{
+  "name": "Custom",
+  "textClasses": {
+    "label": {
+      "fontFace": "Basketball"
+    },
+    "callout": {
+      "fontFace": "Basketball"
+    },
+    "title": {
+      "fontFace": "Basketball"
+    },
+    "header": {
+      "fontFace": "Basketball"
+    }
+  }
+}

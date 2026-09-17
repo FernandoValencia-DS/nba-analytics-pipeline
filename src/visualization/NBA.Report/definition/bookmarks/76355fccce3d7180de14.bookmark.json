@@ -1,0 +1,1014 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Ocultar FIltros Team",
+  "name": "76355fccce3d7180de14",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "f6ff7a6c8d0e0176e81b",
+      "033fed9348d966a82d75",
+      "2e0f8058400970ebbe33",
+      "b405d3987207a8020939",
+      "ad03c29c6749569b51b1"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "20fe8de5bda3640e3517",
+    "filters": {
+      "byExpr": [
+        {
+          "name": "9fdd208900cca03a24bd",
+          "type": "Advanced",
+          "filter": {
+            "Version": 2,
+            "From": [
+              {
+                "Name": "c",
+                "Entity": "calendario",
+                "Type": 0
+              }
+            ],
+            "Where": [
+              {
+                "Condition": {
+                  "Not": {
+                    "Expression": {
+                      "Comparison": {
+                        "ComparisonKind": 0,
+                        "Left": {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "c"
+                              }
+                            },
+                            "Property": "Date"
+                          }
+                        },
+                        "Right": {
+                          "Literal": {
+                            "Value": "null"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "calendario"
+                }
+              },
+              "Property": "Date"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "f47767afdc22ce024c96",
+          "type": "Advanced",
+          "filter": {
+            "Version": 2,
+            "From": [
+              {
+                "Name": "c",
+                "Entity": "core fct_games",
+                "Type": 0
+              }
+            ],
+            "Where": [
+              {
+                "Condition": {
+                  "Not": {
+                    "Expression": {
+                      "Comparison": {
+                        "ComparisonKind": 0,
+                        "Left": {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "c"
+                              }
+                            },
+                            "Property": "game_id"
+                          }
+                        },
+                        "Right": {
+                          "Literal": {
+                            "Value": "null"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "core fct_games"
+                }
+              },
+              "Property": "game_id"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "f5e03c3964e1a0c9e445",
+          "type": "Categorical",
+          "filter": {
+            "Version": 2,
+            "From": [
+              {
+                "Name": "c",
+                "Entity": "core dim_players",
+                "Type": 0
+              }
+            ],
+            "Where": [
+              {
+                "Condition": {
+                  "In": {
+                    "Expressions": [
+                      {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "c"
+                            }
+                          },
+                          "Property": "is_active"
+                        }
+                      }
+                    ],
+                    "Values": [
+                      [
+                        {
+                          "Literal": {
+                            "Value": "true"
+                          }
+                        }
+                      ]
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "core dim_players"
+                }
+              },
+              "Property": "is_active"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "20fe8de5bda3640e3517": {
+        "visualContainers": {
+          "03f4f97bd08043366e38": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "0e981c0d22db38387047",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Team_A"
+                        }
+                      },
+                      "Property": "abbreviation"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "t",
+                                "Entity": "Team_A",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "t"
+                                            }
+                                          },
+                                          "Property": "abbreviation"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "'LAL'"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "0cdc752783b04b5cec36": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "3b49735c31178a6309ca",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Team_B"
+                        }
+                      },
+                      "Property": "abbreviation"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "t",
+                                "Entity": "Team_B",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "t"
+                                            }
+                                          },
+                                          "Property": "abbreviation"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "'ATL'"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "a0e1fcc64d03232b00c0": {
+            "singleVisual": {
+              "visualType": "image",
+              "objects": {}
+            }
+          },
+          "278f6d15d6ed9104c87b": {
+            "singleVisual": {
+              "visualType": "image",
+              "objects": {}
+            }
+          },
+          "84228333512e57e401d0": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "6e6c0be735b7806e6917": {
+            "singleVisual": {
+              "visualType": "image",
+              "objects": {}
+            }
+          },
+          "22f954d4e48d0b035680": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e451c84ebb496908d326",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core dim_zones"
+                        }
+                      },
+                      "Property": "zone_id"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d0159d825ec8ddc3a9ab",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core dim_zones"
+                        }
+                      },
+                      "Property": "zone_name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d9d1a5a2db0a7a01090a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Team B - FGM"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "c6e1eb1308137552308e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Team B - FGA"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core dim_zones"
+                        }
+                      },
+                      "Property": "zone_id"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "7222e979e0cd90103622": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a1e290b7047e00d6176e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo B - Avg Points"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "gauge",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo B - Avg Points"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "1360048f96546ad13d0d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1e252bb5559105c62d1a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo A - Avg Points"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "gauge",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo A - Avg Points"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "263c36050ee86e47d447": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "6d664f7d5b56bb301005",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core dim_zones"
+                        }
+                      },
+                      "Property": "zone_id"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b65b68dae0938cd5980a",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core dim_zones"
+                        }
+                      },
+                      "Property": "zone_name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "faf0006bc908c7111163",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Team A - FGA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "346fa165835a448b2d01",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Team A - FGM"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core dim_zones"
+                        }
+                      },
+                      "Property": "zone_id"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "2be38d7bc0c92a4bc0dd": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a93dc4bf53a6e8a0b12b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo A - Playoff Rank"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "528239fd1d520c0e3907",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo A - Record"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "750346951e6b20e22400",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo A - L10"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo A - Playoff Rank"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "d708eee9c6341cdc5390": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e51aa4b31098083b67b8",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "HeadToHead Resumen"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "70c8e62919b00da070a1": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fffdff520280d4da2ae9",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo B - Playoff Rank"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8988db0b22e2dd1802c6",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo B - Record"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fed50f17c332b2015390",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo B - L10"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Equipo B - Playoff Rank"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "6aa42c5685969a2a9757": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d3e7981a074014e1402b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Metrics"
+                        }
+                      },
+                      "Property": "MetricLabel"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "292f046e9b34b4c6b025",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Team A - Percentile"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "712a9e237a082ba68914",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DAX"
+                        }
+                      },
+                      "Property": "Team B - Percentile"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "radarChart",
+              "objects": {}
+            }
+          },
+          "033fed9348d966a82d75": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a8f92f515e86d00b0c53",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core fct_games"
+                        }
+                      },
+                      "Property": "season_num"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "core fct_games"
+                        }
+                      },
+                      "Property": "season_num"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "2e0f8058400970ebbe33": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "b405d3987207a8020939": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "0986a1bc8107619ac3dc",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "calendario"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "calendario"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ad03c29c6749569b51b1": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "f47dfd9f45d0d2321e24": {
+            "isHidden": false
+          },
+          "f6ff7a6c8d0e0176e81b": {
+            "isHidden": true
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "visible": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

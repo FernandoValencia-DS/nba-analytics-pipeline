@@ -1,0 +1,23 @@
+table games_type
+	lineageTag: 7c03649f-afa9-46a0-a36d-6ec9774a28b8
+
+	column GAMES
+		dataType: string
+		lineageTag: a2385f51-f870-456a-8973-9982c3f36dc6
+		summarizeBy: none
+		sourceColumn: GAMES
+
+		annotation SummarizationSetBy = Automatic
+
+	partition games_type = m
+		mode: import
+		source =
+				let
+				  Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WcvTxUYrViVbycHV0UQjxVwDRSrGxAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [GAMES = _t])
+				in
+				  Origen
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

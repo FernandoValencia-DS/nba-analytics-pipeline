@@ -1,0 +1,58 @@
+table Team_A
+	lineageTag: b8b207c3-57b0-4dde-860a-e099af04594d
+
+	column abbreviation
+		lineageTag: 30c58681-915f-44f8-b66e-6f128f9b1cbb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [abbreviation]
+
+		annotation SummarizationSetBy = Automatic
+
+	column logo
+		lineageTag: 9648a882-f362-4fe4-a929-5fe2573dabbf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [logo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Name'
+		lineageTag: 0c35edf6-3e71-4733-8daf-c59c4d0cb445
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Team Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		formatString: 0
+		lineageTag: ba462bdd-12f6-4f22-ab25-ed140894f02f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [team_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column conference
+		lineageTag: 624b096f-68d2-47ea-8884-65ba106ea058
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [conference]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Team_A = calculated
+		mode: import
+		source =
+				
+				SELECTCOLUMNS(
+				    'core dim_teams',
+				    "team_id", 'core dim_teams'[team_id],
+				    "abbreviation", 'core dim_teams'[abbreviation],
+				    "logo", 'core dim_teams'[team_logo], "Team Name" , 'core dim_teams'[nickname],
+				    "conference", LOOKUPVALUE('core dim_standings'[conference], 'core dim_standings'[team_id], 'core dim_teams'[team_id])
+				)
+
+	annotation PBI_Id = 3503caa8d0c847f59e0411b5a4bc2a04
+

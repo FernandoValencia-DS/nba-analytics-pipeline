@@ -1,0 +1,24 @@
+table Team_B_ha
+	lineageTag: ae2ee88e-7244-49eb-a33f-b0379718f2f5
+
+	column HA
+		lineageTag: 2422257e-ae63-436d-8d10-cc0e475e58cd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [HA]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Team_B_ha = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "HA", STRING,
+				    { {"HOME"}, {"AWAY"} }
+				    
+				)
+				```
+
+	annotation PBI_Id = 474f588656a04c4d9a08800e84569ed5
+

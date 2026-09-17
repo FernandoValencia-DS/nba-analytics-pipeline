@@ -1,0 +1,1285 @@
+table DAX
+	lineageTag: cab793d8-4745-4df6-bb60-b0e048a5a8fa
+
+	measure avg_pts = AVERAGE('core fct_games'[pts])
+		lineageTag: 4c315cdb-d6dc-4dbc-b47b-498199c54918
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ultima Fecha Partidos' =
+			
+			CALCULATE(
+			    MAX('calendario'[Date]),
+			    ALL('calendario')
+			)
+		formatString: General Date
+		lineageTag: 80c76679-2ef9-4c57-82d3-4e73106f0652
+
+	measure FGA = SUM('core fct_shot_zone_gp'[fga])
+		formatString: 0
+		lineageTag: f0448891-c432-4838-acc6-b7aa5a3abea9
+
+	measure FGM = SUM('core fct_shot_zone_gp'[fgm])
+		formatString: 0
+		lineageTag: 54f57dd5-ac79-436d-a2d9-e0a9b702e9a1
+
+	measure FG% = DIVIDE([FGM], [FGA])
+		lineageTag: 244f9a5a-4e6d-441b-a700-232d78b80c9e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure FG_PCT = DIVIDE([FGM], [FGA])
+		formatString: 0.00
+		lineageTag: 45c2178f-c03f-4c8a-bb9a-1764eef4e106
+
+	measure 'Equipo A - L10' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[Team Name])
+			RETURN
+			CALCULATE(
+			    MAX('core dim_standings'[l10]),
+			    'core dim_standings'[team_name] = EquipoA
+			)
+		displayFolder: Est_Generales_Teams
+		lineageTag: f7c803e9-5d69-4fdb-83ab-7fbfd926ce6c
+
+	measure 'Equipo A - Playoff Rank' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[Team Name])
+			RETURN
+			CALCULATE(
+			    MAX('core dim_standings'[playoff_rank]),
+			    'core dim_standings'[team_name] = EquipoA
+			)
+		formatString: 0
+		displayFolder: Est_Generales_Teams
+		lineageTag: 0b78f248-08ca-4d4b-a9be-ff9bbeb201a5
+
+	measure 'Equipo A - Record' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[Team Name])
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			RETURN
+			IF(ISFILTERED(Team_A_ha[HA]),
+			    IF(HA="HOME",
+			        CALCULATE(
+			            MIN('core dim_standings'[home]),
+			            'core dim_standings'[team_name] = EquipoA
+			        ),
+			        CALCULATE(
+			            MIN('core dim_standings'[road]),
+			            'core dim_standings'[team_name] = EquipoA
+			        )),
+			    CALCULATE(
+			            MIN('core dim_standings'[record]),
+			            'core dim_standings'[team_name] = EquipoA
+			        )
+			)
+		displayFolder: Est_Generales_Teams
+		lineageTag: 879a0258-3502-4b17-af96-3f64f2ea3441
+
+	measure 'Victorias Equipo A' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR Wins =
+			    IF(
+			        ISBLANK(EquipoA) || ISBLANK(EquipoB),
+			        BLANK(),
+			        CALCULATE(
+			            COUNTROWS('core fct_games'),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[wl] = "W",
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA)
+			                && CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    )
+			RETURN
+			COALESCE(Wins, 0)
+		formatString: 0
+		displayFolder: Est_Teams
+		lineageTag: 58ef686e-2d0b-4694-9641-5f2c498b67a4
+
+	measure 'Victorias Equipo B' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR Wins =
+			    IF(
+			        ISBLANK(EquipoA) || ISBLANK(EquipoB),
+			        BLANK(),
+			        CALCULATE(
+			            COUNTROWS('core fct_games'),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[wl] = "W",
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA)
+			                && CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    )
+			RETURN
+			COALESCE(Wins, 0)
+		formatString: 0
+		displayFolder: Est_Teams
+		lineageTag: b80103f5-b9a3-499f-bfd3-47f7a18a548f
+
+	measure 'HeadToHead Resumen' = ```
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			RETURN
+			IF(
+			    EquipoA = EquipoB, "SAME TEAM",
+			        IF(ISBLANK(EquipoA) || ISBLANK(EquipoB),
+			        BLANK(),
+			        EquipoA & " " & [Victorias Equipo A]
+			        & " - "
+			        & [Victorias Equipo B] & " " & EquipoB
+			        & " | GAMES: " & [Partidos Enfrentados])
+			    
+			)
+			```
+		displayFolder: Est_Generales_Teams
+		lineageTag: 53d3953a-8c06-47f9-b188-a3171cbd355c
+
+	measure 'Partidos Enfrentados' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			RETURN
+			IF(
+			    ISBLANK(EquipoA) || ISBLANK(EquipoB),
+			    BLANK(),
+			    CALCULATE(
+			        DISTINCTCOUNT('core fct_games'[game_id]),
+			        FILTER(
+			            'core fct_games',
+			            CONTAINSSTRING('core fct_games'[matchup], EquipoA)
+			            && CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: b70df073-d23b-47d5-ae50-f76143659cd7
+
+	measure 'Equipo B - L10' =
+			
+			VAR EquipoB = SELECTEDVALUE(Team_B[Team Name])
+			RETURN
+			CALCULATE(
+			    MAX('core dim_standings'[l10]),
+			    'core dim_standings'[team_name] = EquipoB
+			)
+		displayFolder: Est_Generales_Teams
+		lineageTag: 72ea4452-d3c4-4405-95c3-6f7933bfb465
+
+	measure 'Equipo B - Playoff Rank' =
+			
+			VAR EquipoB = SELECTEDVALUE(Team_B[Team Name])
+			RETURN
+			CALCULATE(
+			    MAX('core dim_standings'[playoff_rank]),
+			    'core dim_standings'[team_name] = EquipoB
+			)
+		formatString: 0
+		displayFolder: Est_Generales_Teams
+		lineageTag: a9c9d697-7e0e-4487-b148-92121e221984
+
+	measure 'Equipo B - Record' =
+			
+			VAR EquipoB = SELECTEDVALUE(Team_B[Team Name])
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			RETURN
+			IF(ISFILTERED(Team_B_ha[HA]),
+			    IF(HA="HOME",
+			        CALCULATE(
+			            MIN('core dim_standings'[home]),
+			            'core dim_standings'[team_name] = EquipoB
+			        ),
+			        CALCULATE(
+			            MIN('core dim_standings'[road]),
+			            'core dim_standings'[team_name] = EquipoB
+			        )),
+			    CALCULATE(
+			            MIN('core dim_standings'[record]),
+			            'core dim_standings'[team_name] = EquipoB
+			        )
+			)
+		displayFolder: Est_Generales_Teams
+		lineageTag: 52c20fb2-7c0d-4e9f-ade8-13030e55d605
+
+	measure 'Equipo A - Avg Points' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			
+			RETURN
+			IF(
+			    GameType = "HEAD TO HEAD",
+			
+			    IF(
+			        ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        ),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    ),
+			
+			    IF(
+			        ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoA
+			        )
+			    )
+			)
+		displayFolder: Est_Teams
+		lineageTag: d5727df7-0545-41aa-81b8-e9b4a8ca203a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Equipo B - Avg Points' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			
+			RETURN
+			IF(
+			    GameType = "HEAD TO HEAD",
+			
+			    IF(
+			        ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        ),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    ),
+			
+			    IF(
+			        ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            AVERAGE('core fct_games'[pts]),
+			            'core fct_games'[team_abbreviation] = EquipoB
+			        )
+			    )
+			)
+		displayFolder: Est_Teams
+		lineageTag: e3e4de82-109f-40c6-b28a-157272ef2d52
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MAX AVG PTS' = MAXX(ALL('core dim_teams'[full_name]),[avg_pts])
+		lineageTag: 07809ad7-1ed5-459f-9e35-988f8056a30c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PTS Compare' =
+			
+			SWITCH(
+			    SELECTEDVALUE('Team Role'[Role]),
+			    "Team A", [Equipo A - Avg Points],
+			    "Team B", [Equipo B - Avg Points]
+			)
+		lineageTag: 9009e8d6-4111-4263-a606-000949706324
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Points by Role' =
+			
+			SWITCH(
+			    SELECTEDVALUE('Team Role'[Role]),
+			    "Team A", [Equipo A - Avg Points],
+			    "Team B", [Equipo B - Avg Points]
+			)
+		lineageTag: f458a8ea-d390-4b40-85cd-ae7a280588ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team Avg Metric' = ```
+			
+			VAR m = SELECTEDVALUE(Metrics[MetricKey])
+			RETURN
+			SWITCH(
+			  m,
+			  "pts", AVERAGE('core fct_games'[pts]),
+			  "fg3m", AVERAGE('core fct_games'[fg3m]),
+			  "ftm", AVERAGE('core fct_games'[ftm]),
+			  "oreb", AVERAGE('core fct_games'[oreb]),
+			  "dreb", AVERAGE('core fct_games'[dreb]),
+			  "ast", AVERAGE('core fct_games'[ast]),
+			  "stl", AVERAGE('core fct_games'[stl]),
+			  "blk", AVERAGE('core fct_games'[blk]),
+			  "tov", AVERAGE('core fct_games'[tov]),
+			  BLANK()
+			)
+			
+			```
+		lineageTag: 94a6c05f-fb5e-44f2-9702-27c2e40ebf05
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team - Avg Metric' =
+			
+			VAR m = SELECTEDVALUE(Metrics[MetricKey])
+			RETURN
+			SWITCH(
+			  m,
+			  "pts", AVERAGE('core fct_games'[pts]),
+			  "fg3m", AVERAGE('core fct_games'[fg3m]),
+			  "ftm", AVERAGE('core fct_games'[ftm]),
+			  "oreb", AVERAGE('core fct_games'[oreb]),
+			  "dreb", AVERAGE('core fct_games'[dreb]),
+			  "ast", AVERAGE('core fct_games'[ast]),
+			  "stl", AVERAGE('core fct_games'[stl]),
+			  "blk", AVERAGE('core fct_games'[blk]),
+			  "tov", AVERAGE('core fct_games'[tov])
+			)
+		lineageTag: 2ff927fa-6766-4b1b-a003-1d14463323fc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team A - Avg Metric' =
+			
+			VAR teamA = SELECTEDVALUE(Team_A[abbreviation])
+			RETURN
+			CALCULATE(
+			  [Team - Avg Metric],
+			  'core fct_games'[team_abbreviation] = teamA
+			)
+		displayFolder: Est_Teams
+		lineageTag: d493fcc0-767b-4622-b3fe-9807056ec869
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team B - Avg Metric' =
+			
+			VAR teamB = SELECTEDVALUE(Team_B[abbreviation])
+			RETURN
+			CALCULATE(
+			  [Team - Avg Metric],
+			  'core fct_games'[team_abbreviation] = teamB
+			)
+		displayFolder: Est_Teams
+		lineageTag: 1b0c7f6e-0fd0-45d6-bf11-8ff94c81c965
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Metric Higher Is Better' =
+			
+			VAR m = SELECTEDVALUE(Metrics[MetricKey])
+			RETURN IF(m = "tov", 0, 1)
+		formatString: 0
+		lineageTag: 20d734f1-5a6b-4d39-9554-d39f9732b83f
+
+	measure 'Team A - Percentile' = ```
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			VAR higherBetter = [Metric Higher Is Better]
+			
+			VAR valueA =
+			    IF(ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            [Team Avg Metric],
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            [Team Avg Metric],
+			            'core fct_games'[team_abbreviation] = EquipoA)
+			    )
+			
+			VAR dist =
+			    ADDCOLUMNS(
+			        VALUES('core fct_games'[team_abbreviation]),
+			        "v", CALCULATE([Team Avg Metric])
+			    )
+			
+			VAR n = COUNTROWS(dist)
+			VAR numLess =
+			    COUNTROWS(
+			        FILTER(dist, [v] < valueA)
+			    )
+			VAR numEqual =
+			    COUNTROWS(
+			        FILTER(dist, [v] = valueA)
+			    )
+			
+			VAR pctHigherBetter =
+			    DIVIDE(numLess + 0.5 * numEqual, n) * 100
+			
+			VAR pctLowerBetter =
+			    100 - pctHigherBetter
+			
+			RETURN
+			IF(higherBetter = 1, pctHigherBetter, pctLowerBetter)
+			
+			```
+		formatString: 0.00
+		displayFolder: Est_Teams
+		lineageTag: eeed7041-2894-417d-8603-30aa73613b07
+
+	measure 'Team B - Percentile' = ```
+			
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			VAR higherBetter = [Metric Higher Is Better]
+			
+			VAR valueB =
+			    IF(ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            [Team Avg Metric],
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            [Team Avg Metric],
+			            'core fct_games'[team_abbreviation] = EquipoB)
+			    )
+			
+			VAR dist =
+			    ADDCOLUMNS(
+			        VALUES('core fct_games'[team_abbreviation]),
+			        "v", CALCULATE([Team Avg Metric])
+			    )
+			
+			VAR n = COUNTROWS(dist)
+			VAR numLess =
+			    COUNTROWS(
+			        FILTER(dist, [v] < valueB)
+			    )
+			VAR numEqual =
+			    COUNTROWS(
+			        FILTER(dist, [v] = valueB)
+			    )
+			
+			VAR pctHigherBetter =
+			    DIVIDE(numLess + 0.5 * numEqual, n) * 100
+			
+			VAR pctLowerBetter =
+			    100 - pctHigherBetter
+			
+			RETURN
+			IF(higherBetter = 1, pctHigherBetter, pctLowerBetter)
+			
+			```
+		formatString: 0.00
+		displayFolder: Est_Teams
+		lineageTag: 0d45b5b5-bfae-4561-8591-2c6d853cad14
+
+	measure 'Team A - FGA' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			
+			RETURN
+			IF(
+			    GameType = "HEAD TO HEAD",
+			
+			    IF(
+			        ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    ),
+			
+			    IF(
+			        ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoA
+			        )
+			    )
+			)
+		displayFolder: Est_Teams
+		lineageTag: fad7504a-dad2-4b5e-8398-9fdf9c2fc696
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team A - FGM' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			
+			RETURN
+			IF(
+			    GameType = "HEAD TO HEAD",
+			
+			    IF(
+			        ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    ),
+			
+			    IF(
+			        ISFILTERED(Team_A_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoA,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoA
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Est_Teams
+		lineageTag: 259c45b3-95c4-489e-8461-03fc2852a5db
+
+	measure 'Team B - FGA' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			
+			RETURN
+			IF(
+			    GameType = "HEAD TO HEAD",
+			
+			    IF(
+			        ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    ),
+			
+			    IF(
+			        ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fga]),
+			            'core fct_games'[team_abbreviation] = EquipoB
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Est_Teams
+		lineageTag: 2ba6e000-701e-44a5-9124-4b74f2526de2
+
+	measure 'Team B - FGM' =
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			
+			RETURN
+			IF(
+			    GameType = "HEAD TO HEAD",
+			
+			    IF(
+			        ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            FILTER(
+			                'core fct_games',
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoA) &&
+			                CONTAINSSTRING('core fct_games'[matchup], EquipoB)
+			            )
+			        )
+			    ),
+			
+			    IF(
+			        ISFILTERED(Team_B_ha[HA]),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoB,
+			            'core fct_games'[ha] = HA
+			        ),
+			        CALCULATE(
+			            SUM('core fct_shot_zone_gp'[fgm]),
+			            'core fct_games'[team_abbreviation] = EquipoB
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Est_Teams
+		lineageTag: 20fb3d28-2919-4fde-a077-286633f96cac
+
+	measure Tarjeta_HA_A = ```
+			
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			VAR tarjeta_A = 
+			    IF(ISFILTERED(Team_A_ha[HA]),HA,"ALL")
+			RETURN tarjeta_A
+			```
+		lineageTag: 5a16e7ab-8720-43ac-a156-d601c86794ce
+
+	measure Tarjeta_HA_B = ```
+			
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			VAR tarjeta_B = 
+			    IF(ISFILTERED(Team_B_ha[HA]),HA,"ALL")
+			RETURN tarjeta_B
+			```
+		lineageTag: f7a2595d-3759-464c-8e42-9e20a8adf981
+
+	measure 'Player A - Avg Points' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[points]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 49858f44-ac24-4a79-820d-352879e68eff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Avg Points' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[points]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: d83681e9-50b2-4deb-ae6a-ede9aabf3ed7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - Avg Assists' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[assists]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 417cc15f-b575-4e33-8213-ffa57aa173a9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - Avg Rebounds' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[rebounds_total]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: de61d9ae-08d3-4314-a19d-a871805464d2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - Avg Turnovers' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[turnovers]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: e125bcd1-f51d-4310-9279-f10320f58bbd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Avg Assists' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[assists]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 3ab3f489-6d43-4da4-a359-8b686033e37b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Avg Rebounds' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[rebounds_total]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: b55d3c12-feeb-4f65-bbb2-34641a2f5ce2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Avg Turnovers' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[turnovers]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: ea53d269-fb09-4f25-9995-ea9bcea8147d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - +/-' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[plus_minus_points]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: c72c4c81-1e1e-4980-844c-4c045a8690b0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - +/-' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[plus_minus_points]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 61191aa7-d297-4632-ad16-d8e6e13e0b64
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - %3pt' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[three_pointers_percentage]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Player_Comparison_Measures
+		lineageTag: f2195e73-9075-4342-9528-9f772a40c422
+
+	measure 'Player B - %3pt' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[three_pointers_percentage]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 84a3f97b-1589-4032-b7d7-a44345cf76b0
+
+	measure 'Player A - %FT' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[free_throws_percentage]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 36ae1f1a-fa40-402f-803d-d371916b1abb
+
+	measure 'Player B - %FT' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[free_throws_percentage]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Player_Comparison_Measures
+		lineageTag: b785fb53-a4f4-466d-86a4-3183c80ff4cc
+
+	measure 'Player A - Avg Steals' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[steals]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 2cf1d4ae-d2d5-40a7-9f66-04d6700927a0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - Avg Blocks' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[blocks]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 65b02dc8-e940-432a-adae-07b757fbfab1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Avg Steals' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[steals]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 6a49c835-e62e-4784-ad8e-5dc5eadd5fb1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Avg Blocks' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[blocks]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 5c2f6cda-bbc6-4bcc-8901-9f53150b16bc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player A - %FG' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[field_goals_percentage]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Player_Comparison_Measures
+		lineageTag: e60d1a2d-ef92-4a89-bfdd-d4a42f88cb30
+
+	measure 'Player B - %FG' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    AVERAGE('core fct_boxscore'[field_goals_percentage]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Player_Comparison_Measures
+		lineageTag: fdb3176d-c20d-42f1-a228-84ce21d94ded
+
+	measure 'Player A - FGA' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    SUM('core fct_shot_zone_gp'[fga]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		formatString: 0
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 5d684f0f-ac12-4ff0-9a0a-36cdf00d8e78
+
+	measure 'Player B - FGA' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    SUM('core fct_shot_zone_gp'[fga]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		formatString: 0
+		displayFolder: Player_Comparison_Measures
+		lineageTag: ecdf570f-4cd1-43d6-af9c-86841be7329c
+
+	measure 'Player B - FGM' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			RETURN
+			CALCULATE(
+			    SUM('core fct_shot_zone_gp'[fgm]),
+			    'core fct_boxscore'[person_id] = PlayerB
+			)
+		formatString: 0
+		displayFolder: Player_Comparison_Measures
+		lineageTag: 3cee31a9-d827-4533-8d0b-3fe449129a2d
+
+	measure 'Player A - FGM' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			RETURN
+			CALCULATE(
+			    SUM('core fct_shot_zone_gp'[fgm]),
+			    'core fct_boxscore'[person_id] = PlayerA
+			)
+		formatString: 0
+		displayFolder: Player_Comparison_Measures
+		lineageTag: ab84e6bf-749e-418b-aaf7-827747d0a2ab
+
+	measure 'Player A - Percentile' =
+			
+			VAR PlayerA = SELECTEDVALUE('Player A'[ID])
+			VAR higherBetter = [Metric Higher Is Better]
+			
+			VAR valueA =
+			    CALCULATE(
+			        [Player Avg Metric],
+			        'core dim_players'[id] = PlayerA
+			    )
+			
+			VAR dist =
+			    ADDCOLUMNS(
+			        VALUES('core dim_players'[id]),
+			        "v", CALCULATE([Player Avg Metric])
+			    )
+			
+			VAR n = COUNTROWS(dist)
+			VAR numLess =
+			    COUNTROWS(
+			        FILTER(dist, [v] < valueA)
+			    )
+			VAR numEqual =
+			    COUNTROWS(
+			        FILTER(dist, [v] = valueA)
+			    )
+			
+			VAR pctHigherBetter =
+			    DIVIDE(numLess + 0.5 * numEqual, n) * 100
+			
+			VAR pctLowerBetter =
+			    100 - pctHigherBetter
+			
+			RETURN
+			IF(higherBetter = 1, pctHigherBetter, pctLowerBetter)
+		lineageTag: 02d1ebac-30c1-4f9c-9079-564b57724f5a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player Avg Metric' = ```
+			
+			VAR m = SELECTEDVALUE(Metrics[MetricKey])
+			RETURN
+			SWITCH(
+			  m,
+			  "pts", AVERAGE('core fct_boxscore'[points]),
+			  "fg3m", AVERAGE('core fct_boxscore'[three_pointers_made]),
+			  "ftm", AVERAGE('core fct_boxscore'[free_throws_made]),
+			  "oreb", AVERAGE('core fct_boxscore'[rebounds_offensive]),
+			  "dreb", AVERAGE('core fct_boxscore'[rebounds_defensive]),
+			  "ast", AVERAGE('core fct_boxscore'[assists]),
+			  "stl", AVERAGE('core fct_boxscore'[steals]),
+			  "blk", AVERAGE('core fct_boxscore'[blocks]),
+			  "tov", AVERAGE('core fct_boxscore'[turnovers]),
+			  BLANK()
+			)
+			
+			```
+		lineageTag: 912e1cb8-ab18-45be-9b36-ae25c39c5d96
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Player B - Percentile' =
+			
+			VAR PlayerB = SELECTEDVALUE('Player B'[ID])
+			VAR higherBetter = [Metric Higher Is Better]
+			
+			VAR valueA =
+			    CALCULATE(
+			        [Player Avg Metric],
+			        'core dim_players'[id] = PlayerB
+			    )
+			
+			VAR dist =
+			    ADDCOLUMNS(
+			        VALUES('core dim_players'[id]),
+			        "v", CALCULATE([Player Avg Metric])
+			    )
+			
+			VAR n = COUNTROWS(dist)
+			VAR numLess =
+			    COUNTROWS(
+			        FILTER(dist, [v] < valueA)
+			    )
+			VAR numEqual =
+			    COUNTROWS(
+			        FILTER(dist, [v] = valueA)
+			    )
+			
+			VAR pctHigherBetter =
+			    DIVIDE(numLess + 0.5 * numEqual, n) * 100
+			
+			VAR pctLowerBetter =
+			    100 - pctHigherBetter
+			
+			RETURN
+			IF(higherBetter = 1, pctHigherBetter, pctLowerBetter)
+		lineageTag: 581f2580-e132-4bc5-a788-8735048e0e81
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Conteo_Filtros_Teams =
+			
+			
+			VAR SEASON = ISFILTERED('core fct_games'[season_num])
+			VAR FILTER_DATE = ISFILTERED(calendario[Mes EN])
+			VAR HA_TEAM_A = ISFILTERED(Team_A_ha[HA])
+			VAR HA_TEAM_B = ISFILTERED(Team_b_ha[HA])
+			VAR SEASON_TYPE = ISFILTERED('core fct_games'[season_type])
+			
+			VAR TOTAL =  SEASON + FILTER_DATE + HA_TEAM_A + HA_TEAM_B + SEASON_TYPE
+			RETURN TOTAL&""
+		lineageTag: a818351c-aedf-4478-9336-a5b13dc3099b
+
+	measure 'Equipo A - Mejor Jugador Zona' = ```
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_A_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			VAR MinFGA = 3
+			
+			VAR EsHeadToHead = GameType = "HEAD TO HEAD"
+			VAR HAFiltrado = ISFILTERED(Team_A_ha[HA])
+			
+			VAR GamesValidos =
+			    FILTER(
+			        'core fct_games',
+			        'core fct_games'[team_abbreviation] = EquipoA
+			        && (NOT HAFiltrado || 'core fct_games'[ha] = HA)
+			        && (
+			            NOT EsHeadToHead
+			            || (CONTAINSSTRING('core fct_games'[matchup], EquipoA) && CONTAINSSTRING('core fct_games'[matchup], EquipoB))
+			        )
+			    )
+			
+			VAR TablaJugadores =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            VALUES('core fct_shot_zone_gp'[player_id]),
+			            "FGA_Jug", CALCULATE(SUM('core fct_shot_zone_gp'[fga])),
+			            "FGM_Jug", CALCULATE(SUM('core fct_shot_zone_gp'[fgm]))
+			        ),
+			        GamesValidos
+			    )
+			
+			VAR TablaFiltrada = FILTER(TablaJugadores, [FGA_Jug] >= MinFGA)
+			VAR PromedioZona = DIVIDE(SUMX(TablaFiltrada, [FGM_Jug]), SUMX(TablaFiltrada, [FGA_Jug]))
+			VAR C = AVERAGEX(TablaFiltrada, [FGA_Jug]) * 0.5
+			
+			VAR TablaAjustada =
+			    ADDCOLUMNS(
+			        TablaFiltrada,
+			        "FGAjustado", DIVIDE([FGM_Jug] + C * PromedioZona, [FGA_Jug] + C)
+			    )
+			
+			VAR MaxAjustado = MAXX(TablaAjustada, [FGAjustado])
+			
+			VAR MejorPlayerID = 
+			    MINX(
+			        FILTER(TablaAjustada, [FGAjustado] = MaxAjustado),
+			        'core fct_shot_zone_gp'[player_id]
+			    )
+			
+			RETURN
+			    CALCULATE(
+			        SELECTEDVALUE('core dim_players'[full_name]),
+			        'core dim_players'[id] = MejorPlayerID
+			    )
+			```
+		lineageTag: c4261c34-c703-4af6-90a4-dce4f9886957
+
+	measure 'Equipo B - Mejor Jugador Zona' = ```
+			
+			VAR EquipoA = SELECTEDVALUE(Team_A[abbreviation])
+			VAR EquipoB = SELECTEDVALUE(Team_B[abbreviation])
+			VAR HA = SELECTEDVALUE(Team_B_ha[HA])
+			VAR GameType = SELECTEDVALUE(games_type[GAMES], "ALL")
+			VAR MinFGA = 3
+			
+			VAR EsHeadToHead = GameType = "HEAD TO HEAD"
+			VAR HAFiltrado = ISFILTERED(Team_B_ha[HA])
+			
+			VAR GamesValidos =
+			    FILTER(
+			        'core fct_games',
+			        'core fct_games'[team_abbreviation] = EquipoB
+			        && (NOT HAFiltrado || 'core fct_games'[ha] = HA)
+			        && (
+			            NOT EsHeadToHead
+			            || (CONTAINSSTRING('core fct_games'[matchup], EquipoA) && CONTAINSSTRING('core fct_games'[matchup], EquipoB))
+			        )
+			    )
+			
+			VAR TablaJugadores =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            VALUES('core fct_shot_zone_gp'[player_id]),
+			            "FGA_Jug", CALCULATE(SUM('core fct_shot_zone_gp'[fga])),
+			            "FGM_Jug", CALCULATE(SUM('core fct_shot_zone_gp'[fgm]))
+			        ),
+			        GamesValidos
+			    )
+			
+			VAR TablaFiltrada = FILTER(TablaJugadores, [FGA_Jug] >= MinFGA)
+			VAR PromedioZona = DIVIDE(SUMX(TablaFiltrada, [FGM_Jug]), SUMX(TablaFiltrada, [FGA_Jug]))
+			VAR C = AVERAGEX(TablaFiltrada, [FGA_Jug]) * 0.5
+			
+			VAR TablaAjustada =
+			    ADDCOLUMNS(
+			        TablaFiltrada,
+			        "FGAjustado", DIVIDE([FGM_Jug] + C * PromedioZona, [FGA_Jug] + C)
+			    )
+			
+			VAR MaxAjustado = MAXX(TablaAjustada, [FGAjustado])
+			
+			VAR MejorPlayerID = 
+			    MINX(
+			        FILTER(TablaAjustada, [FGAjustado] = MaxAjustado),
+			        'core fct_shot_zone_gp'[player_id]
+			    )
+			
+			RETURN
+			    CALCULATE(
+			        SELECTEDVALUE('core dim_players'[full_name]),
+			        'core dim_players'[id] = MejorPlayerID
+			    )
+			```
+		lineageTag: 779b973b-fb90-4cc7-b9ea-585d1215f3a9
+
+	partition DAX = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
+				in
+				    #"Columnas quitadas"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,309 @@
+table 'core fct_games'
+	lineageTag: 41f0caa5-471d-4c49-90f6-e20563fdf16f
+
+	column game_id
+		dataType: string
+		lineageTag: 0e016d85-efcc-484f-b4d9-60347c1b0f01
+		summarizeBy: none
+		sourceColumn: game_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1087851c-8e24-424e-bfc1-94a9b6d7c348
+		summarizeBy: none
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a1fb36c-d848-4da7-8d99-5cf8a8482a00
+		summarizeBy: sum
+		sourceColumn: season_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_num
+		dataType: string
+		lineageTag: f4e04d72-4358-4b08-87c6-f1ef9161ac58
+		summarizeBy: none
+		sourceColumn: season_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cf551707-95d9-43f2-96eb-4e0c8b85d1b3
+		summarizeBy: none
+		sourceColumn: game_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column matchup
+		dataType: string
+		lineageTag: 80b081ff-8821-421f-a76f-ad7be1f22330
+		summarizeBy: none
+		sourceColumn: matchup
+
+		annotation SummarizationSetBy = Automatic
+
+	column ha
+		dataType: string
+		lineageTag: 24eba9b6-df8f-4008-a623-19a0eb08b20b
+		summarizeBy: none
+		sourceColumn: ha
+
+		annotation SummarizationSetBy = Automatic
+
+	column wl
+		dataType: string
+		lineageTag: ed1edf02-34e9-440a-8325-e7838e69d866
+		summarizeBy: none
+		sourceColumn: wl
+
+		annotation SummarizationSetBy = Automatic
+
+	column min
+		dataType: double
+		formatString: 0
+		lineageTag: f4cda442-bc6a-4e13-ac94-8bb34930b8b8
+		summarizeBy: sum
+		sourceColumn: min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pts
+		dataType: int64
+		formatString: 0
+		lineageTag: c40fe838-7435-4ad5-a604-06b95eebe3ff
+		summarizeBy: sum
+		sourceColumn: pts
+
+		annotation SummarizationSetBy = Automatic
+
+	column fgm
+		dataType: int64
+		formatString: 0
+		lineageTag: df8072bd-aa9d-4cf2-8738-c957216e764b
+		summarizeBy: sum
+		sourceColumn: fgm
+
+		annotation SummarizationSetBy = Automatic
+
+	column fga
+		dataType: int64
+		formatString: 0
+		lineageTag: b4376be1-c920-414f-b4d2-581a59600d3c
+		summarizeBy: sum
+		sourceColumn: fga
+
+		annotation SummarizationSetBy = Automatic
+
+	column fg_pct
+		dataType: double
+		lineageTag: 87e068af-fd24-4f5e-bb9c-7ff47bc476df
+		summarizeBy: sum
+		sourceColumn: fg_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fg3m
+		dataType: int64
+		formatString: 0
+		lineageTag: 17d63da2-f582-45ec-a5ab-a16dccdecad7
+		summarizeBy: sum
+		sourceColumn: fg3m
+
+		annotation SummarizationSetBy = Automatic
+
+	column fg3a
+		dataType: int64
+		formatString: 0
+		lineageTag: 85d78be1-1955-4c19-94d7-36d6885aafdc
+		summarizeBy: sum
+		sourceColumn: fg3a
+
+		annotation SummarizationSetBy = Automatic
+
+	column fg3_pct
+		dataType: double
+		lineageTag: 74049355-19c5-4358-a35f-551424a0ddbd
+		summarizeBy: sum
+		sourceColumn: fg3_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ftm
+		dataType: int64
+		formatString: 0
+		lineageTag: 184264d0-971e-4332-a4cc-9882965a500d
+		summarizeBy: sum
+		sourceColumn: ftm
+
+		annotation SummarizationSetBy = Automatic
+
+	column fta
+		dataType: int64
+		formatString: 0
+		lineageTag: cc0eb9cb-8205-4853-8ae7-4b635a6c9a2d
+		summarizeBy: sum
+		sourceColumn: fta
+
+		annotation SummarizationSetBy = Automatic
+
+	column ft_pct
+		dataType: double
+		lineageTag: 812c55c6-1355-45cd-b28e-6f1d6b40af0a
+		summarizeBy: sum
+		sourceColumn: ft_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oreb
+		dataType: int64
+		formatString: 0
+		lineageTag: c0b1bd46-eeee-4fbe-bcc1-762b5f828821
+		summarizeBy: sum
+		sourceColumn: oreb
+
+		annotation SummarizationSetBy = Automatic
+
+	column dreb
+		dataType: int64
+		formatString: 0
+		lineageTag: a11cd052-6f57-4b6a-8e25-86f8029be237
+		summarizeBy: sum
+		sourceColumn: dreb
+
+		annotation SummarizationSetBy = Automatic
+
+	column reb
+		dataType: int64
+		formatString: 0
+		lineageTag: 29b2e1c0-8301-4494-a993-9aeea6239009
+		summarizeBy: sum
+		sourceColumn: reb
+
+		annotation SummarizationSetBy = Automatic
+
+	column ast
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e79703c-6063-4841-9a28-6f9f68afea3a
+		summarizeBy: sum
+		sourceColumn: ast
+
+		annotation SummarizationSetBy = Automatic
+
+	column stl
+		dataType: int64
+		formatString: 0
+		lineageTag: a64c6ffd-453e-429e-b2aa-17a342e540d0
+		summarizeBy: sum
+		sourceColumn: stl
+
+		annotation SummarizationSetBy = Automatic
+
+	column blk
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c05a256-dbe3-4958-82f3-fd5acf964beb
+		summarizeBy: sum
+		sourceColumn: blk
+
+		annotation SummarizationSetBy = Automatic
+
+	column tov
+		dataType: int64
+		formatString: 0
+		lineageTag: fc338e8f-f0ea-42e4-87b9-664986c64a39
+		summarizeBy: sum
+		sourceColumn: tov
+
+		annotation SummarizationSetBy = Automatic
+
+	column pf
+		dataType: int64
+		formatString: 0
+		lineageTag: caea156c-d026-4ff1-bb79-492f94521031
+		summarizeBy: sum
+		sourceColumn: pf
+
+		annotation SummarizationSetBy = Automatic
+
+	column plus_minus
+		dataType: double
+		lineageTag: 6c3c05d9-887e-4f6b-96e7-fc2a1edfc822
+		summarizeBy: sum
+		sourceColumn: plus_minus
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column team_abbreviation
+		dataType: string
+		lineageTag: c1a14e2a-cadb-4cf1-a8e8-e8f9cff6a509
+		summarizeBy: none
+		sourceColumn: team_abbreviation
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		lineageTag: e9674731-fd8b-4b9b-876c-60121b643ba7
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column game_team_id
+		dataType: string
+		lineageTag: 8d07c4db-b4d4-46d6-a867-6c1f3ad51722
+		summarizeBy: none
+		sourceColumn: game_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_team_id
+		dataType: string
+		lineageTag: d8830cde-36af-4729-a156-e2d99011a5ce
+		summarizeBy: none
+		sourceColumn: season_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_type
+		dataType: string
+		lineageTag: 0bf28c8f-1b17-4e68-979f-c843ff299c0e
+		summarizeBy: none
+		sourceColumn: season_type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'core fct_games' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("ep-wispy-darkness-ayi9xhot-pooler.c-5.us-east-2.aws.neon.tech", "neondb"),
+				    core_fct_games = Origen{[Schema="core",Item="fct_games"]}[Data]
+				in
+				    core_fct_games
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

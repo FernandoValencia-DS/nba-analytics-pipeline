@@ -2,7 +2,7 @@ import pandas as pd
 from src.etl.extract.teams import fetch_teams
 from src.etl.transform.shot_zones import load_zones, assign_zones_to_df
 
-ZONES_GEOJSON = "src/data/zones/zones_flipped.geojson"
+ZONES_GEOJSON = "src/data/zones/zones_normal.geojson"
 
 def tr_shots(df: pd.DataFrame) -> pd.DataFrame:
     df['GAME_TEAM_ID'] = df['GAME_ID'].astype(str) + '-' + df['TEAM_ID'].astype(str)
@@ -15,8 +15,8 @@ def tr_shots(df: pd.DataFrame) -> pd.DataFrame:
     df = df.loc[df["TEAM_ID"].astype(str).isin(equipos)].copy()
 
     # flip
-    df['LOC_X'] = df['LOC_X'] * -1
-    df['LOC_Y'] = df['LOC_Y'] * -1
+    #df['LOC_X'] = df['LOC_X']
+    #df['LOC_Y'] = df['LOC_Y']
 
     # zonas
     zones = load_zones(ZONES_GEOJSON)

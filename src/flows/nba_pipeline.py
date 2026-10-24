@@ -7,7 +7,7 @@ from src.scripts.run_standings_load import run as run_standings
 from src.scripts.run_boxscore_load import run as run_boxscore
 from src.scripts.run_shots_load import run as run_shots
 
-seasons = ["2025-26"]
+seasons = ["2025-26", "2026-27"]
 
 @task(name="load-teams", retries=2, retry_delay_seconds=30)
 def load_teams():

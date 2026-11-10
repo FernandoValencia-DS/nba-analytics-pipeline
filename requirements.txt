@@ -9,3 +9,6 @@ python-dotenv
 prefect
 shapely
 requests
+
+scikit-learn==1.9.1
+joblib

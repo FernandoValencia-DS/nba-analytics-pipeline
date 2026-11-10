@@ -197,8 +197,59 @@ select
     count(*) as fga,
     sum(shot_made_flag)::int as fgm
 from core.fct_shots
-group by 1, 2;
+group by 1, 2, 3;
 
 -- required for REFRESH MATERIALIZED VIEW CONCURRENTLY
 create unique index if not exists idx_fct_shot_zone_gp_pk
     on core.fct_shot_zone_gp (game_player_id, zone_id);
+
+-- =========================================================
+-- dim_archetypes (written by src/scripts/run_archetypes_load.py)
+-- =========================================================
+create table if not exists core.dim_archetypes (
+    archetype       text primary key,
+    archetype_name  text,
+    description     text,
+    color           text,
+    sort_order      integer
+);
+
+-- =========================================================
+-- fct_player_archetypes (written by src/scripts/run_archetypes_load.py)
+-- one row per player-season; recomputed every day
+-- =========================================================
+create table if not exists core.fct_player_archetypes (
+    player_season_id            text primary key,
+    player_id                   integer,
+    season_num                  text,
+    archetype                   text,
+    archetype_name              text,
+    affinity_creator            numeric,
+    affinity_role_shooter       numeric,
+    affinity_interior_finisher  numeric,
+    affinity                    numeric,
+    secondary_archetype         text,
+    is_borderline               boolean,
+    is_provisional              boolean,
+    fga                         integer,
+    minutes                     numeric,
+    games                       integer,
+    share_restricted_area       numeric,
+    share_paint                 numeric,
+    share_mid_range             numeric,
+    share_corner_3              numeric,
+    share_above_break_3         numeric,
+    ast_per36                   numeric,
+    oreb_per36                  numeric,
+    fga_per36                   numeric,
+    fta_per36                   numeric,
+    tov_per36                   numeric,
+    pc1                         numeric,
+    pc2                         numeric,
+    log_likelihood              numeric,
+    model_version               text,
+    computed_at                 timestamptz
+);
+
+create index if not exists idx_fct_player_archetypes_player_id on core.fct_player_archetypes (player_id);
+create index if not exists idx_fct_player_archetypes_season on core.fct_player_archetypes (season_num);

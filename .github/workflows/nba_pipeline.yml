@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -30,4 +30,5 @@ jobs:
           SUPABASE_DB_SSLMODE: require
           NBA_PROXY: ${{ secrets.NBA_PROXY }}
           NBA_TIMEOUT: "60"
+          PREFECT_LOGGING_EXTRA_LOGGERS: "src"
         run: python -m src.flows.nba_pipeline

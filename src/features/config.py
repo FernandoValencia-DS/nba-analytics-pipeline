@@ -54,6 +54,11 @@ PCA_ANCHORS = {
     3: "assists",              # PC4 +  pure passer
 }
 
+# --- application (src/scripts/run_archetypes_load.py)
+ACTIVE_MODEL_VERSION = "v1"     # model file: src/models/artifacts/archetypes_<version>.joblib
+MIN_FGA_PROVISIONAL = 40        # shots needed to show a player of an ongoing season
+MIN_MINUTES_PROVISIONAL = 100   # minutes needed to show a player of an ongoing season
+
 # --- archetypes: internal code -> label shown in the dashboard, description and color
 ARCHETYPES = {
     "creator": {

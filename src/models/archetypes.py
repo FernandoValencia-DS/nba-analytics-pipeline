@@ -147,8 +147,8 @@ def predict(artifact: dict, features: pd.DataFrame) -> pd.DataFrame:
     out["secondary_archetype"] = pd.Series(order[:, -2], index=out.index).map(names)
     out["is_borderline"] = out["affinity"] < artifact["borderline_threshold"]
     out["log_likelihood"] = gmm.score_samples(coords.to_numpy())   # low = atypical profile
-    out["pc1"] = coords["PC1"]
-    out["pc2"] = coords["PC2"]
+    for i, col in enumerate(coords.columns, start=1):
+        out[f"pc{i}"] = coords[col]
     return out
 
 
